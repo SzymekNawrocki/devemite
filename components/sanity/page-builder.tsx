@@ -1,0 +1,89 @@
+import dynamic from "next/dynamic";
+
+const Hero = dynamic(() =>
+  import("@/components/blocks/hero").then((mod) => mod.Hero)
+);
+const Features = dynamic(() =>
+  import("@/components/blocks/features").then((mod) => mod.Features)
+);
+const SplitImage = dynamic(() =>
+  import("@/components/blocks/split-image").then((mod) => mod.SplitImage)
+);
+const FAQs = dynamic(() =>
+  import("@/components/blocks/faqs").then((mod) => mod.FAQs)
+);
+const TechnologiesBlock = dynamic(() =>
+  import("@/components/blocks/technologies-block").then(
+    (mod) => mod.TechnologiesBlock
+  )
+);
+const ServicesBlock = dynamic(() =>
+  import("@/components/blocks/services-block").then((mod) => mod.ServicesBlock)
+);
+const CTA = dynamic(() =>
+  import("@/components/blocks/cta").then((mod) => mod.CTA)
+);
+const ProjectsBlock = dynamic(() =>
+  import("@/components/blocks/projects-block").then((mod) => mod.ProjectsBlock)
+);
+const ContactSection = dynamic(() =>
+  import("@/components/blocks/contact-section").then((mod) => mod.ContactSection)
+);
+const RichText = dynamic(() =>
+  import("@/components/blocks/rich-text").then((mod) => mod.RichText)
+);
+const AboutMe = dynamic(() =>
+  import("@/components/blocks/about-me").then((mod) => mod.AboutMe)
+);
+
+import { cn } from "@/lib/utils";
+import { PAGE_QUERYResult } from "@/sanity/types";
+
+export function PageBuilder({
+  content,
+  documentId,
+  documentType,
+  disablePadding = false,
+}: {
+  content: any[];
+  documentId?: string;
+  documentType?: string;
+  disablePadding?: boolean;
+}) {
+  if (!content) return null;
+
+  const isFirstBlockHero = content?.[0]?._type === "hero";
+
+  return (
+    <div className={cn("space-y-16", !isFirstBlockHero && !disablePadding && "pt-28 md:pt-40")}>
+      {content.map((block) => {
+        switch (block._type) {
+          case "hero":
+            return <Hero key={block._key} {...block} />;
+          case "features":
+            return <Features key={block._key} {...block} />;
+          case "splitImage":
+            return <SplitImage key={block._key} {...block} />;
+          case "faqs":
+            return <FAQs key={block._key} {...block} />;
+          case "technologiesBlock":
+            return <TechnologiesBlock key={block._key} {...block} />;
+          case "servicesBlock":
+            return <ServicesBlock key={block._key} {...block} documentType={documentType} />;
+          case "cta":
+            return <CTA key={block._key} {...block} />;
+          case "projectsBlock":
+            return <ProjectsBlock key={block._key} {...block} />;
+          case "contactSection":
+            return <ContactSection key={block._key} {...block} />;
+          case "richText":
+            return <RichText key={block._key} {...block} />;
+          case "aboutMe":
+            return <AboutMe key={block._key} {...block} />;
+          default:
+            return null;
+        }
+      })}
+    </div>
+  );
+}
