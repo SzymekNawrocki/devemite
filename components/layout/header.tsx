@@ -15,7 +15,6 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
-import { X } from "lucide-react";
 
 import { HEADER_QUERYResult } from "@/sanity/types";
 
@@ -92,18 +91,10 @@ export function Header({ data }: { data: HEADER_QUERYResult }) {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[380px] p-0 flex flex-col bg-background">
-              {/* Header */}
-              <div className="flex items-center justify-between px-6 py-5 border-b border-border/50">
+              <div className="flex items-center px-6 py-5 border-b border-border/50">
                 <span className="text-xl font-semibold tracking-tight">Menu</span>
-                <SheetClose asChild>
-                  <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full hover:bg-accent">
-                    <X className="h-5 w-5" />
-                    <span className="sr-only">Close</span>
-                  </Button>
-                </SheetClose>
               </div>
 
-              {/* Navigation Links */}
               <nav className="flex-1 px-6 py-8">
                 <ul className="space-y-1">
                   {navigation.map((item, index: number) => (
@@ -129,7 +120,6 @@ export function Header({ data }: { data: HEADER_QUERYResult }) {
                 </ul>
               </nav>
 
-              {/* Footer */}
               <div className="px-6 py-5 bg-muted/30 border-t border-border/50">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
