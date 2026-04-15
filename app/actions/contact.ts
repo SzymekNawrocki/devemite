@@ -36,7 +36,7 @@ export async function submitContactForm(data: ContactFormData & { website?: stri
     } else {
       const { data: _emailData, error: emailError } = await resend.emails.send({
         from: "Portfolio Contact <onboarding@resend.dev>",
-        to: ["devnawrocki@gmail.com"],
+        to: [process.env.CONTACT_EMAIL ?? ""],
         subject: `Nowa wiadomość od: ${validatedData.name}`,
         html: `<p><strong>Imię:</strong> ${validatedData.name}</p>
                <p><strong>Email:</strong> ${validatedData.email}</p>
