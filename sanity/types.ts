@@ -5707,6 +5707,8 @@ export type SITE_SETTINGS_QUERYResult = {
   darkThemeLabel: string | null;
   systemThemeLabel: string | null;
   breadcrumbHomeLabel: string | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
 } | null;
 // Variable: HEADER_QUERY
 // Query: *[_type == "header" && language == $lang][0]{    logoImage,    logoAlt,    menuLabel,    navigation[]{      label,      href    }  }
@@ -5796,7 +5798,7 @@ declare module "@sanity/client" {
     "\n  *[_type == \"contactSettings\" && language == $lang][0]{\n    nameLabel,\n    namePlaceholder,\n    emailLabel,\n    emailPlaceholder,\n    messageLabel,\n    messagePlaceholder,\n    submitButtonLabel,\n    successMessage,\n    errorMessage\n  }\n": CONTACT_SETTINGS_QUERYResult;
     "\n  *[_id == $id][0]{\n    title,\n    mainImage\n  }\n": OG_IMAGE_QUERYResult;
     "\n  *[_type in [\"page\", \"post\", \"technology\", \"service\", \"project\"] && defined(slug.current) && language == $lang]{\n    \"href\": select(\n      _type == \"page\" => \"/\" + slug.current,\n      _type == \"post\" => \"/posts/\" + slug.current,\n      _type == \"technology\" => \"/technologies/\" + slug.current,\n      _type == \"service\" => \"/services/\" + slug.current,\n      _type == \"project\" => \"/projects/\" + slug.current,\n      slug.current\n    ),\n    _updatedAt\n  }\n": SITEMAP_QUERYResult;
-    "\n  *[_type == \"siteSettings\" && language == $lang][0]{\n    themeToggleLabel,\n    lightThemeLabel,\n    darkThemeLabel,\n    systemThemeLabel,\n    breadcrumbHomeLabel\n  }\n": SITE_SETTINGS_QUERYResult;
+    "\n  *[_type == \"siteSettings\" && language == $lang][0]{\n    themeToggleLabel,\n    lightThemeLabel,\n    darkThemeLabel,\n    systemThemeLabel,\n    breadcrumbHomeLabel,\n    seoTitle,\n    seoDescription\n  }\n": SITE_SETTINGS_QUERYResult;
     "\n  *[_type == \"header\" && language == $lang][0]{\n    logoImage,\n    logoAlt,\n    menuLabel,\n    navigation[]{\n      label,\n      href\n    }\n  }\n": HEADER_QUERYResult;
     "\n  *[_type == \"footer\" && language == $lang][0]{\n    logoImage,\n    logoAlt,\n    copyrightText,\n    privacyPolicyLink{\n      label,\n      href\n    },\n    socialLinks[]{\n      platform,\n      url,\n      iconImage\n    }\n  }\n": FOOTER_QUERYResult;
   }

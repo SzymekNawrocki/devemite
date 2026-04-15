@@ -18,11 +18,18 @@ const jbMono = JetBrains_Mono({
   display: "swap",
   variable: "--font-jb-mono",
 });
-export const metadata: Metadata = {
-  title: "Devemite - Where every grain holds a story",
-  description:
-    "Devemite - Where every grain holds a story. A portfolio/blog website of a developer Szymon Nawrocki",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const { data: siteSettings } = await sanityFetch({ query: SITE_SETTINGS_QUERY, params: { lang } });
+  return {
+    title: siteSettings?.seoTitle ?? "Devemite - Where every grain holds a story",
+    description: siteSettings?.seoDescription ?? "Devemite - Where every grain holds a story. A portfolio/blog website of a developer Szymon Nawrocki",
+  };
+}
 
 export default async function FrontendLayout({
   children,

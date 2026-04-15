@@ -448,7 +448,9 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
     lightThemeLabel,
     darkThemeLabel,
     systemThemeLabel,
-    breadcrumbHomeLabel
+    breadcrumbHomeLabel,
+    seoTitle,
+    seoDescription
   }
 `);
 

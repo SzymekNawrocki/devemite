@@ -53,6 +53,18 @@ export const siteSettingsType = defineType({
       description: "Label for home in breadcrumbs (e.g., 'Home')",
       initialValue: "Home",
     }),
+    defineField({
+      name: "seoTitle",
+      title: "SEO Title",
+      type: "string",
+      description: "Default <title> tag for the site (used as layout-level fallback)",
+    }),
+    defineField({
+      name: "seoDescription",
+      title: "SEO Description",
+      type: "string",
+      description: "Default meta description for the site (used as layout-level fallback)",
+    }),
   ],
   preview: {
     select: {
