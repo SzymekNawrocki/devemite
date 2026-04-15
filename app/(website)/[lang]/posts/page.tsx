@@ -51,7 +51,7 @@ export default async function Page({
   const { lang } = resolvedParams;
 
   const [posts, pageData, homeData]: [POSTS_QUERYResult, POSTS_PAGE_QUERYResult, any] = await Promise.all([
-    client.fetch(POSTS_QUERY, { lang }),
+    client.fetch(POSTS_QUERY, { lang, limit: 12 }),
     client.fetch(POSTS_PAGE_QUERY, { lang }),
     client.fetch(HOME_TITLE_QUERY, { lang }),
   ]);

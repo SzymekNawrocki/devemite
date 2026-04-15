@@ -69,7 +69,7 @@ export const POSTS_PAGE_QUERY = defineQuery(`
 
 export const POSTS_QUERY = defineQuery(`
   *[_type == "post" && defined(slug.current) && language == $lang]
-  | order(publishedAt desc)[0...12]{
+  | order(publishedAt desc)[0...$limit]{
     _id,
     title,
     slug,
