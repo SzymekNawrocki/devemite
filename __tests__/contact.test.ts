@@ -51,6 +51,12 @@ describe('submitContactForm', () => {
     expect(result.message).toBe('Invalid form data. Please check your inputs.')
   })
 
+  it('returns success:false when message is too short', async () => {
+    const result = await submitContactForm({ ...validData, message: 'Hi' })
+    expect(result.success).toBe(false)
+    expect(result.message).toBe('Invalid form data. Please check your inputs.')
+  })
+
   it('returns success:true for valid data', async () => {
     const result = await submitContactForm(validData)
     expect(result).toEqual({ success: true })

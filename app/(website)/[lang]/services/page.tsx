@@ -8,9 +8,10 @@ import { Button } from "@/components/ui/button";
 import { SectionTitle } from "@/components/ui/section-title";
 import { Globe, Code, Mail, Server, Cpu, ArrowRight, Layers, Zap, LineChart, Database, Monitor, MoveLeft } from "lucide-react";
 
-import { SERVICES_QUERYResult } from "@/sanity/types";
+import { type LucideIcon } from "lucide-react";
+import { SERVICES_QUERYResult, HOME_TITLE_QUERYResult, HEADER_QUERYResult, SERVICES_PAGE_QUERYResult } from "@/sanity/types";
 
-const iconsMap: any = {
+const iconsMap: Record<string, LucideIcon> = {
   Globe,
   Code,
   Mail,
@@ -30,7 +31,7 @@ export default async function Page({
 }) {
   const resolvedParams = await params;
   const { lang } = resolvedParams;
-  const [services, homeData, headerData, pageData]: [SERVICES_QUERYResult, any, any, any] = await Promise.all([
+  const [services, homeData, headerData, pageData]: [SERVICES_QUERYResult, HOME_TITLE_QUERYResult, HEADER_QUERYResult, SERVICES_PAGE_QUERYResult] = await Promise.all([
     client.fetch(SERVICES_QUERY, { lang }),
     client.fetch(HOME_TITLE_QUERY, { lang }),
     client.fetch(HEADER_QUERY, { lang }),
@@ -38,7 +39,7 @@ export default async function Page({
   ]);
 
   const servicesLabel = pageData?.title ||
-    headerData?.navigation?.find((n: any) => n.href === "/services")?.label || "Services";
+    headerData?.navigation?.find((n) => n.href === "/services")?.label || "Services";
 
   const readMoreLabel = pageData?.readMoreLabel || (lang === "pl" ? "Dowiedz się więcej" : "Learn more");
 
