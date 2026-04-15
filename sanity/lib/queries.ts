@@ -22,6 +22,29 @@ const TECHNOLOGIES_WITH_FALLBACK = `
   )
 `;
 
+const PROJECTS_BLOCK_FRAGMENT = `
+  _type == "projectsBlock" => {
+    "eyebrow": eyebrow,
+    "title": title,
+    "description": description,
+    "mode": mode,
+    detailsLabel,
+    mode == "selected" => {
+      "projects": projects[]->[language == $lang]{
+        _id, title, slug, description, mainImage, projectLink, githubLink,
+        ${TECHNOLOGIES_WITH_FALLBACK}
+      }
+    },
+    mode == "all" => {
+      "projects": *[_type == "project" && defined(slug.current) && language == $lang] | order(_createdAt desc)[0...100] {
+        _id, title, slug, description, mainImage, projectLink, githubLink,
+        ${TECHNOLOGIES_WITH_FALLBACK},
+        language
+      }
+    }
+  }
+`;
+
 export const POSTS_PAGE_QUERY = defineQuery(`
   *[_type == "postsPage" && language == $lang][0]{
     eyebrow,
@@ -196,25 +219,7 @@ export const PAGE_QUERY = defineQuery(`
       _type == "technologiesBlock" => {
         "technologies": technologies[]->{_id, name, slug, description, icon, color, language}
       },
-      _type == "projectsBlock" => {
-        "eyebrow": eyebrow,
-        "title": title,
-        "description": description,
-        "mode": mode,
-        detailsLabel,
-        mode == "selected" => {
-          "projects": projects[]->[language == $lang]{
-            _id, title, slug, description, mainImage, projectLink, githubLink,
-            ${TECHNOLOGIES_WITH_FALLBACK}
-          }
-        },
-        mode == "all" => {
-          "projects": *[_type == "project" && defined(slug.current) && language == $lang] | order(_createdAt desc)[0...100] {
-            _id, title, slug, description, mainImage, projectLink, githubLink,
-            ${TECHNOLOGIES_WITH_FALLBACK}
-          }
-        }
-      }
+      ${PROJECTS_BLOCK_FRAGMENT}
     }
   }
 `);
@@ -250,25 +255,7 @@ export const HOME_PAGE_QUERY = defineQuery(`
         _type == "technologiesBlock" => {
           "technologies": technologies[]->{_id, name, slug, description, icon, color, language}
         },
-        _type == "projectsBlock" => {
-          "eyebrow": eyebrow,
-          "title": title,
-          "description": description,
-          "mode": mode,
-          detailsLabel,
-          mode == "selected" => {
-            "projects": projects[]->[language == $lang]{
-              _id, title, slug, description, mainImage, projectLink, githubLink,
-              ${TECHNOLOGIES_WITH_FALLBACK}
-            }
-          },
-          mode == "all" => {
-            "projects": *[_type == "project" && defined(slug.current) && language == $lang] | order(_createdAt desc)[0...100] {
-              _id, title, slug, description, mainImage, projectLink, githubLink,
-              ${TECHNOLOGIES_WITH_FALLBACK}
-            }
-          }
-        }
+        ${PROJECTS_BLOCK_FRAGMENT}
       }
     }
   }
@@ -308,38 +295,7 @@ export const TECHNOLOGY_QUERY = defineQuery(`
       _type == "technologiesBlock" => {
         "technologies": technologies[]->{_id, name, slug, description, icon, color, language}
       },
-      _type == "projectsBlock" => {
-        "eyebrow": eyebrow,
-        "title": title,
-        "description": description,
-        "mode": mode,
-        detailsLabel,
-        mode == "selected" => {
-          "projects": projects[]->[language == $lang]{
-            _id,
-            title,
-            slug,
-            description,
-            mainImage,
-            projectLink,
-            githubLink,
-            ${TECHNOLOGIES_WITH_FALLBACK}
-          }
-        },
-        mode == "all" => {
-          "projects": *[_type == "project" && defined(slug.current) && language == $lang] | order(_createdAt desc)[0...100] {
-            _id,
-            title,
-            slug,
-            description,
-            mainImage,
-            projectLink,
-            githubLink,
-            ${TECHNOLOGIES_WITH_FALLBACK},
-            language
-          }
-        }
-      }
+      ${PROJECTS_BLOCK_FRAGMENT}
     },
     "seo": {
       "title": coalesce(seo.title, name, ""),
@@ -385,38 +341,7 @@ export const SERVICE_QUERY = defineQuery(`
       _type == "technologiesBlock" => {
         "technologies": technologies[]->{_id, name, slug, description, icon, color, language}
       },
-      _type == "projectsBlock" => {
-        "eyebrow": eyebrow,
-        "title": title,
-        "description": description,
-        "mode": mode,
-        detailsLabel,
-        mode == "selected" => {
-          "projects": projects[]->[language == $lang]{
-            _id,
-            title,
-            slug,
-            description,
-            mainImage,
-            projectLink,
-            githubLink,
-            ${TECHNOLOGIES_WITH_FALLBACK}
-          }
-        },
-        mode == "all" => {
-          "projects": *[_type == "project" && defined(slug.current) && language == $lang] | order(_createdAt desc)[0...100] {
-            _id,
-            title,
-            slug,
-            description,
-            mainImage,
-            projectLink,
-            githubLink,
-            ${TECHNOLOGIES_WITH_FALLBACK},
-            language
-          }
-        }
-      }
+      ${PROJECTS_BLOCK_FRAGMENT}
     },
     "seo": {
       "title": coalesce(seo.title, title, ""),
