@@ -57,7 +57,7 @@ export function Post(props: NonNullable<POST_QUERYResult> & {
                 <div className="relative rounded-3xl w-full h-[300px] md:h-[500px] overflow-hidden">
                   <Image
                       src={urlFor(mainImage).width(1200).height(600).url()}
-                      alt={mainImage.alt || title || "Post Image"}
+                      alt={mainImage.alt || title || labels?.postImageAlt || "Post Image"}
                       fill
                       className="object-cover"
                       priority

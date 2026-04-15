@@ -16,9 +16,9 @@ import {
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 
-import { HEADER_QUERYResult } from "@/sanity/types";
+import { HEADER_QUERYResult, SITE_SETTINGS_QUERYResult } from "@/sanity/types";
 
-export function Header({ data }: { data: HEADER_QUERYResult }) {
+export function Header({ data, siteSettings }: { data: HEADER_QUERYResult; siteSettings?: SITE_SETTINGS_QUERYResult }) {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -48,7 +48,7 @@ export function Header({ data }: { data: HEADER_QUERYResult }) {
           {data?.logoImage && (
             <Image
               src={urlFor(data.logoImage).url()}
-              alt="Logo Devemite"
+              alt={data?.logoAlt || "Logo"}
               width={600} // Zwiększone, żeby Next.js pobrał gęstszy plik
               height={200}
               priority
@@ -74,7 +74,7 @@ export function Header({ data }: { data: HEADER_QUERYResult }) {
         
         <div className="flex items-center gap-2">
           <div className="hidden md:flex items-center gap-2">
-            <ModeToggle scrolled={scrolled} />
+            <ModeToggle scrolled={scrolled} labels={siteSettings} />
             <LanguageSwitcher scrolled={scrolled} />
           </div>
 
@@ -85,14 +85,14 @@ export function Header({ data }: { data: HEADER_QUERYResult }) {
                 variant="ghost"
                 size="icon"
                 className={`md:hidden transition-colors ${scrolled ? 'text-foreground' : 'text-white'}`}
-                aria-label="Open menu"
+                aria-label={data?.menuLabel || "Open menu"}
               >
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[380px] p-0 flex flex-col bg-background">
               <div className="flex items-center px-6 py-5 border-b border-border/50">
-                <span className="text-xl font-semibold tracking-tight">Menu</span>
+                <span className="text-xl font-semibold tracking-tight">{data?.menuLabel || "Menu"}</span>
               </div>
 
               <nav className="flex-1 px-6 py-8">
@@ -123,7 +123,7 @@ export function Header({ data }: { data: HEADER_QUERYResult }) {
               <div className="px-6 py-5 bg-muted/30 border-t border-border/50">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <ModeToggle scrolled={true} />
+                    <ModeToggle scrolled={true} labels={siteSettings} />
                   </div>
                   <Separator orientation="vertical" className="h-8" />
                   <LanguageSwitcher scrolled={true} />

@@ -16,6 +16,13 @@ export const footerType = defineType({
       },
     }),
     defineField({
+      name: "logoAlt",
+      title: "Logo Alt Text",
+      type: "string",
+      description: "Alternative text for the logo (e.g., 'Logo Devemite')",
+      initialValue: "Logo",
+    }),
+    defineField({
       name: "privacyPolicyLink",
       title: "Privacy Policy Link",
       type: "object",
@@ -48,10 +55,11 @@ export const footerType = defineType({
       ],
     }),
     defineField({
-      name: "language",
+      name: "copyrightText",
+      title: "Copyright Text",
       type: "string",
-      readOnly: true,
-      hidden: true,
+      description: "Copyright text with {year} placeholder for dynamic year (e.g., '© {year} Szymon Nawrocki - Devemite')",
+      initialValue: "© {year} Szymon Nawrocki - Devemite",
     }),
   ],
   preview: {

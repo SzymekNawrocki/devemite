@@ -8,15 +8,60 @@ export const siteSettingsType = defineType({
   icon: ControlsIcon,
   fields: [
     defineField({
+      name: "language",
+      type: "string",
+      readOnly: true,
+      hidden: true,
+    }),
+    defineField({
       name: "homePage",
       type: "reference",
       to: [{ type: "page" }],
     }),
+    defineField({
+      name: "themeToggleLabel",
+      title: "Theme Toggle Label",
+      type: "string",
+      description: "Aria label for theme toggle button (e.g., 'Toggle theme')",
+      initialValue: "Toggle theme",
+    }),
+    defineField({
+      name: "lightThemeLabel",
+      title: "Light Theme Label",
+      type: "string",
+      description: "Label for light theme option (e.g., 'Light')",
+      initialValue: "Light",
+    }),
+    defineField({
+      name: "darkThemeLabel",
+      title: "Dark Theme Label",
+      type: "string",
+      description: "Label for dark theme option (e.g., 'Dark')",
+      initialValue: "Dark",
+    }),
+    defineField({
+      name: "systemThemeLabel",
+      title: "System Theme Label",
+      type: "string",
+      description: "Label for system theme option (e.g., 'System')",
+      initialValue: "System",
+    }),
+    defineField({
+      name: "breadcrumbHomeLabel",
+      title: "Breadcrumb Home Label",
+      type: "string",
+      description: "Label for home in breadcrumbs (e.g., 'Home')",
+      initialValue: "Home",
+    }),
   ],
   preview: {
-    prepare() {
+    select: {
+      language: "language",
+    },
+    prepare({ language }) {
       return {
         title: "Site Settings",
+        subtitle: language ? `Language: ${language}` : "No language set",
       };
     },
   },

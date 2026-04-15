@@ -13,6 +13,48 @@
  */
 
 // Source: schema.json
+export type ProjectsPage = {
+  _id: string;
+  _type: "projectsPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  language?: string;
+  title: string;
+  description?: string;
+  detailsLabel?: string;
+  backToProjectsLabel?: string;
+  technologiesLabel?: string;
+  noDescriptionLabel?: string;
+  projectImageAlt?: string;
+  githubLabel?: string;
+  backToHomeLabel?: string;
+  seo?: Seo;
+};
+
+export type Seo = {
+  _type: "seo";
+  title?: string;
+};
+
+export type ContactSettings = {
+  _id: string;
+  _type: "contactSettings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  nameLabel?: string;
+  namePlaceholder?: string;
+  emailLabel?: string;
+  emailPlaceholder?: string;
+  messageLabel?: string;
+  messagePlaceholder?: string;
+  submitButtonLabel?: string;
+  successMessage?: string;
+  errorMessage?: string;
+  language?: string;
+};
+
 export type ServicesPage = {
   _id: string;
   _type: "servicesPage";
@@ -22,12 +64,8 @@ export type ServicesPage = {
   language?: string;
   title: string;
   readMoreLabel?: string;
+  backToHomeLabel?: string;
   seo?: Seo;
-};
-
-export type Seo = {
-  _type: "seo";
-  title?: string;
 };
 
 export type AboutMe = {
@@ -200,12 +238,18 @@ export type SiteSettings = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  language?: string;
   homePage?: {
     _ref: string;
     _type: "reference";
     _weak?: boolean;
     [internalGroqTypeReferenceTo]?: "page";
   };
+  themeToggleLabel?: string;
+  lightThemeLabel?: string;
+  darkThemeLabel?: string;
+  systemThemeLabel?: string;
+  breadcrumbHomeLabel?: string;
 };
 
 export type SplitImage = {
@@ -552,6 +596,7 @@ export type PostsPage = {
   backToBlogLabel?: string;
   minReadLabel?: string;
   noDescriptionLabel?: string;
+  postImageAlt?: string;
   relatedPostsEyebrow?: string;
   relatedPostsTitle?: string;
   emptyStateTitle?: string;
@@ -577,6 +622,7 @@ export type Footer = {
     crop?: SanityImageCrop;
     _type: "image";
   };
+  logoAlt?: string;
   privacyPolicyLink?: {
     label?: string;
     href?: string;
@@ -599,7 +645,7 @@ export type Footer = {
     _type: "socialLink";
     _key: string;
   }>;
-  language?: string;
+  copyrightText?: string;
 };
 
 export type Header = {
@@ -620,12 +666,14 @@ export type Header = {
     crop?: SanityImageCrop;
     _type: "image";
   };
+  logoAlt?: string;
   navigation?: Array<{
     label?: string;
     href?: string;
     _type: "navItem";
     _key: string;
   }>;
+  menuLabel?: string;
   language?: string;
 };
 
@@ -924,7 +972,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = ServicesPage | Seo | AboutMe | RichText | ContactMessage | ContactSection | ProjectsBlock | Cta | ServicesBlock | TechnologiesBlock | Redirect | SiteSettings | SplitImage | Hero | Features | Locale | Faqs | PageBuilder | BlockContent | Social | TranslationMetadata | InternationalizedArrayReference | InternationalizedArrayReferenceValue | Project | SanityImageCrop | SanityImageHotspot | Slug | Service | Technology | Faq | PostsPage | Footer | Header | Post | Page | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = ProjectsPage | Seo | ContactSettings | ServicesPage | AboutMe | RichText | ContactMessage | ContactSection | ProjectsBlock | Cta | ServicesBlock | TechnologiesBlock | Redirect | SiteSettings | SplitImage | Hero | Features | Locale | Faqs | PageBuilder | BlockContent | Social | TranslationMetadata | InternationalizedArrayReference | InternationalizedArrayReferenceValue | Project | SanityImageCrop | SanityImageHotspot | Slug | Service | Technology | Faq | PostsPage | Footer | Header | Post | Page | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: sanity/lib/queries.ts
 // Variable: POSTS_PAGE_QUERY
@@ -937,6 +985,7 @@ export type POSTS_PAGE_QUERYResult = {
   backToBlogLabel: string | null;
   minReadLabel: string | null;
   noDescriptionLabel: string | null;
+  postImageAlt: string | null;
   relatedPostsEyebrow: string | null;
   relatedPostsTitle: string | null;
   emptyStateTitle: string | null;
@@ -1083,6 +1132,12 @@ export type PROJECTS_QUERYResult = Array<{
   githubLink: string | null;
   technologies: Array<never> | Array<{
     _id: string;
+    slug: null;
+    name: null;
+    icon: null;
+    language: null;
+  } | {
+    _id: string;
     slug: Slug;
     name: null;
     icon: null;
@@ -1156,6 +1211,12 @@ export type PROJECT_QUERYResult = {
   githubLink: string | null;
   technologies: Array<never> | Array<{
     _id: string;
+    slug: null;
+    name: null;
+    icon: null;
+    language: null;
+  } | {
+    _id: string;
     slug: Slug;
     name: null;
     icon: null;
@@ -1203,8 +1264,23 @@ export type PROJECT_QUERYResult = {
   };
 } | null;
 // Variable: PROJECTS_PAGE_QUERY
-// Query: *[_type == "projectsPage" && language == $lang][0]{    title,    description,    detailsLabel,    backToProjectsLabel,    technologiesLabel,    noDescriptionLabel,    backToHomeLabel,    "seo": {      "title": coalesce(seo.title, title, ""),      "description": coalesce(seo.description, description, ""),      "seoImage": seo.seoImage    }  }
-export type PROJECTS_PAGE_QUERYResult = null;
+// Query: *[_type == "projectsPage" && language == $lang][0]{    title,    description,    detailsLabel,    backToProjectsLabel,    technologiesLabel,    noDescriptionLabel,    projectImageAlt,    githubLabel,    backToHomeLabel,    "seo": {      "title": coalesce(seo.title, title, ""),      "description": coalesce(seo.description, description, ""),      "seoImage": seo.seoImage    }  }
+export type PROJECTS_PAGE_QUERYResult = {
+  title: string;
+  description: string | null;
+  detailsLabel: string | null;
+  backToProjectsLabel: string | null;
+  technologiesLabel: string | null;
+  noDescriptionLabel: string | null;
+  projectImageAlt: string | null;
+  githubLabel: string | null;
+  backToHomeLabel: string | null;
+  seo: {
+    title: string;
+    description: string | "";
+    seoImage: null;
+  };
+} | null;
 // Variable: PAGE_QUERY
 // Query: *[_type in ["page", "technology", "service"] && slug.current == $slug && language == $lang][0]{    ...,    "seo": {      "title": coalesce(seo.title, title, name, ""),      "description": coalesce(seo.description, description, ""),      "seoImage": seo.seoImage    },    content[]{      ...,      _type == "faqs" => {        "faqs": faqs[]->{_id, _type, title, body}      },      _type == "servicesSection" => {        "services": services[]->{_id, title, slug, description, icon},        readMoreLabel      },      _type == "servicesBlock" => {        "services": services[]->{_id, title, slug, description, icon},        readMoreLabel      },      _type == "technologiesBlock" => {        "technologies": technologies[]->{_id, name, slug, description, icon, color, language}      },      _type == "projectsBlock" => {        "eyebrow": eyebrow,        "title": title,        "description": description,        "mode": mode,        detailsLabel,        mode == "selected" => {          "projects": projects[]->[language == $lang]{            _id, title, slug, description, mainImage, projectLink, githubLink,              "technologies": coalesce(    technologies[]->{      "tech": coalesce(        *[_type == "translation.metadata" && references(^._id)][0].translations[_key == $lang][0].value->,        @      ){          _id,  slug,  name,  icon,  language      }    }.tech,    []  )          }        },        mode == "all" => {          "projects": *[_type == "project" && defined(slug.current) && language == $lang] | order(_createdAt desc)[0...100] {            _id, title, slug, description, mainImage, projectLink, githubLink,              "technologies": coalesce(    technologies[]->{      "tech": coalesce(        *[_type == "translation.metadata" && references(^._id)][0].translations[_key == $lang][0].value->,        @      ){          _id,  slug,  name,  icon,  language      }    }.tech,    []  )          }        }      }    }  }
 export type PAGE_QUERYResult = {
@@ -1375,6 +1451,12 @@ export type PAGE_QUERYResult = {
       githubLink: string | null;
       technologies: Array<never> | Array<{
         _id: string;
+        slug: null;
+        name: null;
+        icon: null;
+        language: null;
+      } | {
+        _id: string;
         slug: Slug;
         name: null;
         icon: null;
@@ -1462,6 +1544,12 @@ export type PAGE_QUERYResult = {
       projectLink: string | null;
       githubLink: string | null;
       technologies: Array<never> | Array<{
+        _id: string;
+        slug: null;
+        name: null;
+        icon: null;
+        language: null;
+      } | {
         _id: string;
         slug: Slug;
         name: null;
@@ -1764,6 +1852,12 @@ export type PAGE_QUERYResult = {
       githubLink: string | null;
       technologies: Array<never> | Array<{
         _id: string;
+        slug: null;
+        name: null;
+        icon: null;
+        language: null;
+      } | {
+        _id: string;
         slug: Slug;
         name: null;
         icon: null;
@@ -1851,6 +1945,12 @@ export type PAGE_QUERYResult = {
       projectLink: string | null;
       githubLink: string | null;
       technologies: Array<never> | Array<{
+        _id: string;
+        slug: null;
+        name: null;
+        icon: null;
+        language: null;
+      } | {
         _id: string;
         slug: Slug;
         name: null;
@@ -2155,6 +2255,12 @@ export type PAGE_QUERYResult = {
       githubLink: string | null;
       technologies: Array<never> | Array<{
         _id: string;
+        slug: null;
+        name: null;
+        icon: null;
+        language: null;
+      } | {
+        _id: string;
         slug: Slug;
         name: null;
         icon: null;
@@ -2242,6 +2348,12 @@ export type PAGE_QUERYResult = {
       projectLink: string | null;
       githubLink: string | null;
       technologies: Array<never> | Array<{
+        _id: string;
+        slug: null;
+        name: null;
+        icon: null;
+        language: null;
+      } | {
         _id: string;
         slug: Slug;
         name: null;
@@ -2548,6 +2660,12 @@ export type HOME_PAGE_QUERYResult = {
         githubLink: string | null;
         technologies: Array<never> | Array<{
           _id: string;
+          slug: null;
+          name: null;
+          icon: null;
+          language: null;
+        } | {
+          _id: string;
           slug: Slug;
           name: null;
           icon: null;
@@ -2635,6 +2753,12 @@ export type HOME_PAGE_QUERYResult = {
         projectLink: string | null;
         githubLink: string | null;
         technologies: Array<never> | Array<{
+          _id: string;
+          slug: null;
+          name: null;
+          icon: null;
+          language: null;
+        } | {
           _id: string;
           slug: Slug;
           name: null;
@@ -2913,6 +3037,12 @@ export type HOME_PAGE_QUERYResult = {
         githubLink: string | null;
         technologies: Array<never> | Array<{
           _id: string;
+          slug: null;
+          name: null;
+          icon: null;
+          language: null;
+        } | {
+          _id: string;
           slug: Slug;
           name: null;
           icon: null;
@@ -3000,6 +3130,12 @@ export type HOME_PAGE_QUERYResult = {
         projectLink: string | null;
         githubLink: string | null;
         technologies: Array<never> | Array<{
+          _id: string;
+          slug: null;
+          name: null;
+          icon: null;
+          language: null;
+        } | {
           _id: string;
           slug: Slug;
           name: null;
@@ -3278,6 +3414,12 @@ export type HOME_PAGE_QUERYResult = {
         githubLink: string | null;
         technologies: Array<never> | Array<{
           _id: string;
+          slug: null;
+          name: null;
+          icon: null;
+          language: null;
+        } | {
+          _id: string;
           slug: Slug;
           name: null;
           icon: null;
@@ -3365,6 +3507,12 @@ export type HOME_PAGE_QUERYResult = {
         projectLink: string | null;
         githubLink: string | null;
         technologies: Array<never> | Array<{
+          _id: string;
+          slug: null;
+          name: null;
+          icon: null;
+          language: null;
+        } | {
           _id: string;
           slug: Slug;
           name: null;
@@ -3657,6 +3805,12 @@ export type HOME_PAGE_QUERYResult = {
         githubLink: string | null;
         technologies: Array<never> | Array<{
           _id: string;
+          slug: null;
+          name: null;
+          icon: null;
+          language: null;
+        } | {
+          _id: string;
           slug: Slug;
           name: null;
           icon: null;
@@ -3744,6 +3898,12 @@ export type HOME_PAGE_QUERYResult = {
         projectLink: string | null;
         githubLink: string | null;
         technologies: Array<never> | Array<{
+          _id: string;
+          slug: null;
+          name: null;
+          icon: null;
+          language: null;
+        } | {
           _id: string;
           slug: Slug;
           name: null;
@@ -4022,6 +4182,12 @@ export type HOME_PAGE_QUERYResult = {
         githubLink: string | null;
         technologies: Array<never> | Array<{
           _id: string;
+          slug: null;
+          name: null;
+          icon: null;
+          language: null;
+        } | {
+          _id: string;
           slug: Slug;
           name: null;
           icon: null;
@@ -4109,6 +4275,12 @@ export type HOME_PAGE_QUERYResult = {
         projectLink: string | null;
         githubLink: string | null;
         technologies: Array<never> | Array<{
+          _id: string;
+          slug: null;
+          name: null;
+          icon: null;
+          language: null;
+        } | {
           _id: string;
           slug: Slug;
           name: null;
@@ -4387,6 +4559,12 @@ export type HOME_PAGE_QUERYResult = {
         githubLink: string | null;
         technologies: Array<never> | Array<{
           _id: string;
+          slug: null;
+          name: null;
+          icon: null;
+          language: null;
+        } | {
+          _id: string;
           slug: Slug;
           name: null;
           icon: null;
@@ -4474,6 +4652,12 @@ export type HOME_PAGE_QUERYResult = {
         projectLink: string | null;
         githubLink: string | null;
         technologies: Array<never> | Array<{
+          _id: string;
+          slug: null;
+          name: null;
+          icon: null;
+          language: null;
+        } | {
           _id: string;
           slug: Slug;
           name: null;
@@ -4779,6 +4963,12 @@ export type TECHNOLOGY_QUERYResult = {
       githubLink: string | null;
       technologies: Array<never> | Array<{
         _id: string;
+        slug: null;
+        name: null;
+        icon: null;
+        language: null;
+      } | {
+        _id: string;
         slug: Slug;
         name: null;
         icon: null;
@@ -4867,6 +5057,12 @@ export type TECHNOLOGY_QUERYResult = {
       projectLink: string | null;
       githubLink: string | null;
       technologies: Array<never> | Array<{
+        _id: string;
+        slug: null;
+        name: null;
+        icon: null;
+        language: null;
+      } | {
         _id: string;
         slug: Slug;
         name: null;
@@ -5178,6 +5374,12 @@ export type SERVICE_QUERYResult = {
       githubLink: string | null;
       technologies: Array<never> | Array<{
         _id: string;
+        slug: null;
+        name: null;
+        icon: null;
+        language: null;
+      } | {
+        _id: string;
         slug: Slug;
         name: null;
         icon: null;
@@ -5266,6 +5468,12 @@ export type SERVICE_QUERYResult = {
       projectLink: string | null;
       githubLink: string | null;
       technologies: Array<never> | Array<{
+        _id: string;
+        slug: null;
+        name: null;
+        icon: null;
+        language: null;
+      } | {
         _id: string;
         slug: Slug;
         name: null;
@@ -5405,7 +5613,7 @@ export type SERVICES_PAGE_QUERYResult = {
   title: string;
   description: null;
   readMoreLabel: string | null;
-  backToHomeLabel: null;
+  backToHomeLabel: string | null;
   seo: {
     title: string;
     description: "";
@@ -5428,6 +5636,19 @@ export type REDIRECTS_QUERYResult = Array<{
   destination: string;
   permanent: boolean;
 }>;
+// Variable: CONTACT_SETTINGS_QUERY
+// Query: *[_type == "contactSettings" && language == $lang][0]{    nameLabel,    namePlaceholder,    emailLabel,    emailPlaceholder,    messageLabel,    messagePlaceholder,    submitButtonLabel,    successMessage,    errorMessage  }
+export type CONTACT_SETTINGS_QUERYResult = {
+  nameLabel: string | null;
+  namePlaceholder: string | null;
+  emailLabel: string | null;
+  emailPlaceholder: string | null;
+  messageLabel: string | null;
+  messagePlaceholder: string | null;
+  submitButtonLabel: string | null;
+  successMessage: string | null;
+  errorMessage: string | null;
+} | null;
 // Variable: OG_IMAGE_QUERY
 // Query: *[_id == $id][0]{    title,    mainImage  }
 export type OG_IMAGE_QUERYResult = {
@@ -5478,8 +5699,17 @@ export type SITEMAP_QUERYResult = Array<{
   href: string | null;
   _updatedAt: string;
 }>;
+// Variable: SITE_SETTINGS_QUERY
+// Query: *[_type == "siteSettings" && language == $lang][0]{    themeToggleLabel,    lightThemeLabel,    darkThemeLabel,    systemThemeLabel,    breadcrumbHomeLabel  }
+export type SITE_SETTINGS_QUERYResult = {
+  themeToggleLabel: string | null;
+  lightThemeLabel: string | null;
+  darkThemeLabel: string | null;
+  systemThemeLabel: string | null;
+  breadcrumbHomeLabel: string | null;
+} | null;
 // Variable: HEADER_QUERY
-// Query: *[_type == "header" && language == $lang][0]{    logoImage,    navigation[]{      label,      href    }  }
+// Query: *[_type == "header" && language == $lang][0]{    logoImage,    logoAlt,    menuLabel,    navigation[]{      label,      href    }  }
 export type HEADER_QUERYResult = {
   logoImage: {
     asset?: {
@@ -5493,13 +5723,15 @@ export type HEADER_QUERYResult = {
     crop?: SanityImageCrop;
     _type: "image";
   };
+  logoAlt: string | null;
+  menuLabel: string | null;
   navigation: Array<{
     label: string | null;
     href: string | null;
   }> | null;
 } | null;
 // Variable: FOOTER_QUERY
-// Query: *[_type == "footer" && language == $lang][0]{    logoImage,    privacyPolicyLink{      label,      href    },    socialLinks[]{      platform,      url,      iconImage    }  }
+// Query: *[_type == "footer" && language == $lang][0]{    logoImage,    logoAlt,    copyrightText,    privacyPolicyLink{      label,      href    },    socialLinks[]{      platform,      url,      iconImage    }  }
 export type FOOTER_QUERYResult = {
   logoImage: {
     asset?: {
@@ -5513,6 +5745,8 @@ export type FOOTER_QUERYResult = {
     crop?: SanityImageCrop;
     _type: "image";
   } | null;
+  logoAlt: string | null;
+  copyrightText: string | null;
   privacyPolicyLink: {
     label: string | null;
     href: string | null;
@@ -5539,14 +5773,14 @@ export type FOOTER_QUERYResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n  *[_type == \"postsPage\" && language == $lang][0]{\n    eyebrow,\n    title,\n    intro,\n    backToHomeLabel,\n    backToBlogLabel,\n    minReadLabel,\n    noDescriptionLabel,\n    relatedPostsEyebrow,\n    relatedPostsTitle,\n    emptyStateTitle,\n    emptyStateDescription,\n    \"seo\": {\n      \"title\": coalesce(seo.title, title, \"\"),\n      \"description\": coalesce(seo.description, \"\"),\n      \"seoImage\": seo.seoImage\n    }\n  }\n": POSTS_PAGE_QUERYResult;
+    "\n  *[_type == \"postsPage\" && language == $lang][0]{\n    eyebrow,\n    title,\n    intro,\n    backToHomeLabel,\n    backToBlogLabel,\n    minReadLabel,\n    noDescriptionLabel,\n    postImageAlt,\n    relatedPostsEyebrow,\n    relatedPostsTitle,\n    emptyStateTitle,\n    emptyStateDescription,\n    \"seo\": {\n      \"title\": coalesce(seo.title, title, \"\"),\n      \"description\": coalesce(seo.description, \"\"),\n      \"seoImage\": seo.seoImage\n    }\n  }\n": POSTS_PAGE_QUERYResult;
     "\n  *[_type == \"post\" && defined(slug.current) && language == $lang]\n  | order(publishedAt desc)[0...12]{\n    _id,\n    title,\n    slug,\n    excerpt,\n    body,\n    mainImage,\n    publishedAt,\n    \"categories\": coalesce(\n      categories[]->{_id, slug, title},\n      []\n    ),\n    author->{name, image},\n    relatedPosts[]{\n      _key,\n      ...@->{\n        _id,\n        title,\n        slug,\n        language\n      }\n    },\n    \"seo\": {\n      \"title\": coalesce(seo.title, title, \"\"),\n      \"description\": coalesce(seo.description, \"\"),\n      \"seoImage\": seo.seoImage\n    }\n  }\n": POSTS_QUERYResult;
     "\n  *[_type == \"post\" && defined(slug.current) && language == $lang]{\n    \"slug\": slug.current,\n    language\n  }\n": POSTS_SLUGS_QUERYResult;
     "\n  *[_type == \"post\" && slug.current == $slug && language == $lang][0]{\n    _id,\n    title,\n    body,\n    mainImage,\n    publishedAt,\n    \"categories\": coalesce(\n      categories[]->{_id, slug, title},\n      []\n    ),\n    author->{name, image},\n    relatedPosts[]{\n      _key,\n      ...@->{\n        _id,\n        title,\n        slug,\n        language\n      }\n    },\n    \"seo\": {\n      \"title\": coalesce(seo.title, title, \"\"),\n      \"description\": coalesce(seo.description, \"\"),\n      \"seoImage\": seo.seoImage\n    }\n  }\n": POST_QUERYResult;
     "\n  *[_type == \"project\" && defined(slug.current) && language == $lang]\n  | order(_createdAt desc){\n    _id,\n    title,\n    slug,\n    description,\n    mainImage,\n    projectLink,\n    githubLink,\n    \n  \"technologies\": coalesce(\n    technologies[]->{\n      \"tech\": coalesce(\n        *[_type == \"translation.metadata\" && references(^._id)][0].translations[_key == $lang][0].value->,\n        @\n      ){\n        \n  _id,\n  slug,\n  name,\n  icon,\n  language\n\n      }\n    }.tech,\n    []\n  )\n,\n    language\n  }\n": PROJECTS_QUERYResult;
     "\n  *[_type == \"project\" && defined(slug.current) && language == $lang]{\n    \"slug\": slug.current,\n    language\n  }\n": PROJECTS_SLUGS_QUERYResult;
     "\n  *[_type == \"project\" && slug.current == $slug && language == $lang][0]{\n    _id,\n    title,\n    slug,\n    description,\n    body,\n    mainImage,\n    projectLink,\n    githubLink,\n    \n  \"technologies\": coalesce(\n    technologies[]->{\n      \"tech\": coalesce(\n        *[_type == \"translation.metadata\" && references(^._id)][0].translations[_key == $lang][0].value->,\n        @\n      ){\n        \n  _id,\n  slug,\n  name,\n  icon,\n  language\n\n      }\n    }.tech,\n    []\n  )\n,\n    \"seo\": {\n      \"title\": coalesce(seo.title, title, \"\"),\n      \"description\": coalesce(seo.description, description, \"\"),\n      \"seoImage\": seo.seoImage\n    }\n  }\n": PROJECT_QUERYResult;
-    "\n  *[_type == \"projectsPage\" && language == $lang][0]{\n    title,\n    description,\n    detailsLabel,\n    backToProjectsLabel,\n    technologiesLabel,\n    noDescriptionLabel,\n    backToHomeLabel,\n    \"seo\": {\n      \"title\": coalesce(seo.title, title, \"\"),\n      \"description\": coalesce(seo.description, description, \"\"),\n      \"seoImage\": seo.seoImage\n    }\n  }\n": PROJECTS_PAGE_QUERYResult;
+    "\n  *[_type == \"projectsPage\" && language == $lang][0]{\n    title,\n    description,\n    detailsLabel,\n    backToProjectsLabel,\n    technologiesLabel,\n    noDescriptionLabel,\n    projectImageAlt,\n    githubLabel,\n    backToHomeLabel,\n    \"seo\": {\n      \"title\": coalesce(seo.title, title, \"\"),\n      \"description\": coalesce(seo.description, description, \"\"),\n      \"seoImage\": seo.seoImage\n    }\n  }\n": PROJECTS_PAGE_QUERYResult;
     "\n  *[_type in [\"page\", \"technology\", \"service\"] && slug.current == $slug && language == $lang][0]{\n    ...,\n    \"seo\": {\n      \"title\": coalesce(seo.title, title, name, \"\"),\n      \"description\": coalesce(seo.description, description, \"\"),\n      \"seoImage\": seo.seoImage\n    },\n    content[]{\n      ...,\n      _type == \"faqs\" => {\n        \"faqs\": faqs[]->{_id, _type, title, body}\n      },\n      _type == \"servicesSection\" => {\n        \"services\": services[]->{_id, title, slug, description, icon},\n        readMoreLabel\n      },\n      _type == \"servicesBlock\" => {\n        \"services\": services[]->{_id, title, slug, description, icon},\n        readMoreLabel\n      },\n      _type == \"technologiesBlock\" => {\n        \"technologies\": technologies[]->{_id, name, slug, description, icon, color, language}\n      },\n      _type == \"projectsBlock\" => {\n        \"eyebrow\": eyebrow,\n        \"title\": title,\n        \"description\": description,\n        \"mode\": mode,\n        detailsLabel,\n        mode == \"selected\" => {\n          \"projects\": projects[]->[language == $lang]{\n            _id, title, slug, description, mainImage, projectLink, githubLink,\n            \n  \"technologies\": coalesce(\n    technologies[]->{\n      \"tech\": coalesce(\n        *[_type == \"translation.metadata\" && references(^._id)][0].translations[_key == $lang][0].value->,\n        @\n      ){\n        \n  _id,\n  slug,\n  name,\n  icon,\n  language\n\n      }\n    }.tech,\n    []\n  )\n\n          }\n        },\n        mode == \"all\" => {\n          \"projects\": *[_type == \"project\" && defined(slug.current) && language == $lang] | order(_createdAt desc)[0...100] {\n            _id, title, slug, description, mainImage, projectLink, githubLink,\n            \n  \"technologies\": coalesce(\n    technologies[]->{\n      \"tech\": coalesce(\n        *[_type == \"translation.metadata\" && references(^._id)][0].translations[_key == $lang][0].value->,\n        @\n      ){\n        \n  _id,\n  slug,\n  name,\n  icon,\n  language\n\n      }\n    }.tech,\n    []\n  )\n\n          }\n        }\n      }\n    }\n  }\n": PAGE_QUERYResult;
     "\n  *[_type == \"page\" && defined(slug.current) && language == $lang]{\n    \"slug\": slug.current,\n    language\n  }\n": PAGES_SLUGS_QUERYResult;
     "\n  *[_id == \"siteSettings\"][0]{\n    \"homePage\": coalesce(\n      *[_type == \"translation.metadata\" && references(^.homePage._ref)][0].translations[_key == $lang][0].value->,\n      homePage->\n    ) {\n      _id,\n      title,\n      content[] {\n        ...,\n        _type == \"faqs\" => {\n          \"faqs\": faqs[]->{_id, _type, title, body}\n        },\n        _type == \"servicesSection\" => {\n          \"services\": services[]->{_id, title, slug, description, icon},\n          readMoreLabel\n        },\n        _type == \"servicesBlock\" => {\n          \"services\": services[]->{_id, title, slug, description, icon},\n          readMoreLabel\n        },\n        _type == \"technologiesBlock\" => {\n          \"technologies\": technologies[]->{_id, name, slug, description, icon, color, language}\n        },\n        _type == \"projectsBlock\" => {\n          \"eyebrow\": eyebrow,\n          \"title\": title,\n          \"description\": description,\n          \"mode\": mode,\n          detailsLabel,\n          mode == \"selected\" => {\n            \"projects\": projects[]->[language == $lang]{\n              _id, title, slug, description, mainImage, projectLink, githubLink,\n              \n  \"technologies\": coalesce(\n    technologies[]->{\n      \"tech\": coalesce(\n        *[_type == \"translation.metadata\" && references(^._id)][0].translations[_key == $lang][0].value->,\n        @\n      ){\n        \n  _id,\n  slug,\n  name,\n  icon,\n  language\n\n      }\n    }.tech,\n    []\n  )\n\n            }\n          },\n          mode == \"all\" => {\n            \"projects\": *[_type == \"project\" && defined(slug.current) && language == $lang] | order(_createdAt desc)[0...100] {\n              _id, title, slug, description, mainImage, projectLink, githubLink,\n              \n  \"technologies\": coalesce(\n    technologies[]->{\n      \"tech\": coalesce(\n        *[_type == \"translation.metadata\" && references(^._id)][0].translations[_key == $lang][0].value->,\n        @\n      ){\n        \n  _id,\n  slug,\n  name,\n  icon,\n  language\n\n      }\n    }.tech,\n    []\n  )\n\n            }\n          }\n        }\n      }\n    }\n  }\n": HOME_PAGE_QUERYResult;
@@ -5559,9 +5793,11 @@ declare module "@sanity/client" {
     "\n  *[_type == \"technologiesPage\" && language == $lang][0]{\n    title,\n    description,\n    backToHomeLabel,\n    emptyStateTitle,\n    emptyStateDescription,\n    \"seo\": {\n      \"title\": coalesce(seo.title, title, \"\"),\n      \"description\": coalesce(seo.description, description, \"\"),\n      \"seoImage\": seo.seoImage\n    }\n  }\n": TECHNOLOGIES_PAGE_QUERYResult;
     "\n  *[_type == \"service\" && defined(slug.current) && language == $lang]{\n    \"slug\": slug.current,\n    language\n  }\n": SERVICES_SLUGS_QUERYResult;
     "\n  *[_type == \"redirect\" && isEnabled == true]{\n    source,\n    destination,\n    permanent\n  }\n": REDIRECTS_QUERYResult;
+    "\n  *[_type == \"contactSettings\" && language == $lang][0]{\n    nameLabel,\n    namePlaceholder,\n    emailLabel,\n    emailPlaceholder,\n    messageLabel,\n    messagePlaceholder,\n    submitButtonLabel,\n    successMessage,\n    errorMessage\n  }\n": CONTACT_SETTINGS_QUERYResult;
     "\n  *[_id == $id][0]{\n    title,\n    mainImage\n  }\n": OG_IMAGE_QUERYResult;
     "\n  *[_type in [\"page\", \"post\", \"technology\", \"service\", \"project\"] && defined(slug.current) && language == $lang]{\n    \"href\": select(\n      _type == \"page\" => \"/\" + slug.current,\n      _type == \"post\" => \"/posts/\" + slug.current,\n      _type == \"technology\" => \"/technologies/\" + slug.current,\n      _type == \"service\" => \"/services/\" + slug.current,\n      _type == \"project\" => \"/projects/\" + slug.current,\n      slug.current\n    ),\n    _updatedAt\n  }\n": SITEMAP_QUERYResult;
-    "\n  *[_type == \"header\" && language == $lang][0]{\n    logoImage,\n    navigation[]{\n      label,\n      href\n    }\n  }\n": HEADER_QUERYResult;
-    "\n  *[_type == \"footer\" && language == $lang][0]{\n    logoImage,\n    privacyPolicyLink{\n      label,\n      href\n    },\n    socialLinks[]{\n      platform,\n      url,\n      iconImage\n    }\n  }\n": FOOTER_QUERYResult;
+    "\n  *[_type == \"siteSettings\" && language == $lang][0]{\n    themeToggleLabel,\n    lightThemeLabel,\n    darkThemeLabel,\n    systemThemeLabel,\n    breadcrumbHomeLabel\n  }\n": SITE_SETTINGS_QUERYResult;
+    "\n  *[_type == \"header\" && language == $lang][0]{\n    logoImage,\n    logoAlt,\n    menuLabel,\n    navigation[]{\n      label,\n      href\n    }\n  }\n": HEADER_QUERYResult;
+    "\n  *[_type == \"footer\" && language == $lang][0]{\n    logoImage,\n    logoAlt,\n    copyrightText,\n    privacyPolicyLink{\n      label,\n      href\n    },\n    socialLinks[]{\n      platform,\n      url,\n      iconImage\n    }\n  }\n": FOOTER_QUERYResult;
   }
 }

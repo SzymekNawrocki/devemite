@@ -12,10 +12,9 @@ type ProjectsBlockProps = Partial<Extract<
   NonNullable<NonNullable<PAGE_QUERYResult>["content"]>[number],
   { _type: "projectsBlock" }
 >> & {
-  // Ensure _type is still present for the type guard if needed, 
-  // though Partial makes it optional. We can keep it simple.
   _type?: "projectsBlock";
   detailsLabel?: string;
+  projectImageAlt?: string;
 };
 
 export function ProjectsBlock(props: ProjectsBlockProps) {
@@ -30,7 +29,9 @@ export function ProjectsBlock(props: ProjectsBlockProps) {
     return null;
   }
 
-  const { eyebrow, title, description, mode, limit, projects, detailsLabel } = props;
+  const { eyebrow, title, description, mode, limit, projects, detailsLabel, projectImageAlt } = props;
+  
+  const imageAltFallback = projectImageAlt || "Project Image";
 
   const displayProjects =
     mode === "all" ? (projects as any[]).slice(0, limit || 6) : projects;
@@ -58,7 +59,7 @@ export function ProjectsBlock(props: ProjectsBlockProps) {
                 <div className="relative h-48 overflow-hidden">
                   <Image
                     src={urlFor(project.mainImage).width(600).height(400).url()}
-                    alt={project.mainImage.alt || project.title || "Project Image"}
+                    alt={project.mainImage.alt || project.title || imageAltFallback}
                     fill
                     className="object-cover"
                   />

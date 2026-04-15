@@ -15,7 +15,7 @@ export function Footer({ data }: { data: FOOTER_QUERYResult }) {
             {data?.logoImage && (
               <Image
                 src={urlFor(data.logoImage).url()}
-                alt="Logo Devemite"
+                alt={data?.logoAlt || "Logo"}
                 width={400}
                 height={120}
                 className="w-auto h-12 md:h-16 lg:h-20 object-contain"
@@ -64,7 +64,9 @@ export function Footer({ data }: { data: FOOTER_QUERYResult }) {
       <Separator className="opacity-30" />
 
       <div className="py-6 text-primary/70 text-sm text-center">
-        &copy; {new Date().getFullYear()} Szymon Nawrocki - Devemite
+        {data?.copyrightText 
+          ? data.copyrightText.replace("{year}", new Date().getFullYear().toString())
+          : `&copy; ${new Date().getFullYear()} Szymon Nawrocki - Devemite`}
       </div>
     </footer>
   );

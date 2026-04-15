@@ -10,7 +10,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Footer } from "@/components/layout/footer";
 import { sanityFetch } from "@/sanity/lib/live";
-import { HEADER_QUERY, FOOTER_QUERY } from "@/sanity/lib/queries";
+import { HEADER_QUERY, FOOTER_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 import { JetBrains_Mono } from "next/font/google";
 
 const jbMono = JetBrains_Mono({
@@ -34,9 +34,10 @@ export default async function FrontendLayout({
   const { lang } = await params;
   const messages = await getMessages();
 
-  const [headerData, footerData] = await Promise.all([
+  const [headerData, footerData, siteSettingsData] = await Promise.all([
     sanityFetch({ query: HEADER_QUERY, params: { lang } }),
     sanityFetch({ query: FOOTER_QUERY, params: { lang } }),
+    sanityFetch({ query: SITE_SETTINGS_QUERY, params: { lang } }),
   ]);
 
   return (
@@ -49,7 +50,7 @@ export default async function FrontendLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <Header data={headerData.data} />
+              <Header data={headerData.data} siteSettings={siteSettingsData.data} />
               {children}
               <Footer data={footerData.data} />
             </ThemeProvider>

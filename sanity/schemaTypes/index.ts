@@ -28,6 +28,8 @@ import { footerType } from "./footerType";
 import { richTextType } from "./blocks/richTextType";
 import { aboutMeType } from "./blocks/aboutMeType";
 import { servicesPageType } from "./servicesPageType";
+import { contactSettingsType } from "./contactSettingsType";
+import { projectsPageType } from "./projectsPageType";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -60,6 +62,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     richTextType,
     aboutMeType,
     servicesPageType,
+    contactSettingsType,
+    projectsPageType,
   ],
 };
 

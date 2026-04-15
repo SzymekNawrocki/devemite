@@ -24,7 +24,7 @@ interface BreadcrumbsProps {
   className?: string;
 }
 
-export function Breadcrumbs({ items = [], homeLabel = "Home", className }: BreadcrumbsProps) {
+export function Breadcrumbs({ items = [], homeLabel, className }: BreadcrumbsProps) {
   const locale = useLocale();
 
   return (

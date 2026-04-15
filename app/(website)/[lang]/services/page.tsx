@@ -6,7 +6,7 @@ import { SERVICES_QUERY, HOME_TITLE_QUERY, HEADER_QUERY, SERVICES_PAGE_QUERY } f
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SectionTitle } from "@/components/ui/section-title";
-import { Globe, Code, Mail, Server, Cpu, ArrowRight, Layers, Zap, LineChart, Database, Monitor } from "lucide-react";
+import { Globe, Code, Mail, Server, Cpu, ArrowRight, Layers, Zap, LineChart, Database, Monitor, MoveLeft } from "lucide-react";
 
 import { SERVICES_QUERYResult } from "@/sanity/types";
 
@@ -41,6 +41,8 @@ export default async function Page({
     headerData?.navigation?.find((n: any) => n.href === "/services")?.label || "Services";
 
   const readMoreLabel = pageData?.readMoreLabel || (lang === "pl" ? "Dowiedz się więcej" : "Learn more");
+
+  const backToHomeLabel = pageData?.backToHomeLabel || (lang === "pl" ? "Powrót do strony głównej" : lang === "de" ? "Zurück zur Startseite" : "Back to home");
 
   return (
     <section className="pt-28 md:pt-40 pb-24">
@@ -81,6 +83,16 @@ export default async function Page({
               </Card>
             );
           })}
+        </div>
+
+        <div className="mt-12 pt-8 border-t">
+          <Link
+            href={`/${lang}`}
+            className="group inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors font-medium"
+          >
+            <MoveLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+            {backToHomeLabel}
+          </Link>
         </div>
       </Container>
     </section>

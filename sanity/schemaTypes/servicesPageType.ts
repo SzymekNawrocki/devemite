@@ -25,6 +25,11 @@ export const servicesPageType = defineType({
       title: "Read More Label",
     }),
     defineField({
+      name: "backToHomeLabel",
+      type: "string",
+      title: "Back to Home label",
+    }),
+    defineField({
       name: "seo",
       type: "seo",
     }),

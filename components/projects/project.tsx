@@ -13,21 +13,41 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, MoveLeft } from "lucide-react";
+import { Link } from '@/i18n/navigation';
 import { Eyebrow } from '../ui/eyebrow';
 
-export function Project(props: NonNullable<PROJECT_QUERYResult>) {
+interface ProjectProps extends NonNullable<PROJECT_QUERYResult> {
+  pageSettings?: {
+    technologiesLabel?: string;
+    noDescriptionLabel?: string;
+    backToProjectsLabel?: string;
+    githubLabel?: string;
+    projectImageAlt?: string;
+  };
+  lang?: string;
+}
+
+export function Project(props: ProjectProps) {
   const {
     title,
     mainImage,
     body,
     projectLink,
     githubLink,
-    technologies
+    technologies,
+    pageSettings,
+    lang = 'en'
   } = props;
 
+  const technologiesLabel = pageSettings?.technologiesLabel || "Technologies";
+  const noDescriptionLabel = pageSettings?.noDescriptionLabel || "No detailed description provided.";
+  const backToProjectsLabel = pageSettings?.backToProjectsLabel || (lang === "pl" ? "Powrót do projektów" : lang === "de" ? "Zurück zu Projekten" : "Back to projects");
+  const githubLabel = pageSettings?.githubLabel || "GitHub";
+  const projectImageAlt = pageSettings?.projectImageAlt || "Project Image";
+
   return (
-    <Card className="p-6 md:p-14 rounded-3xl">
+    <Card className="p-6 md:p-14 rounded-3xl mb-12">
       <CardHeader className="space-y-6">
         <div className="flex md:flex-row flex-col justify-between items-start md:items-center gap-4">
             <div>
@@ -40,7 +60,7 @@ export function Project(props: NonNullable<PROJECT_QUERYResult>) {
                 {githubLink && (
                     <Button asChild variant="outline">
                         <a href={githubLink} target="_blank" rel="noopener noreferrer">
-                            <Github className="mr-2 w-4 h-4" /> GitHub
+                            <Github className="mr-2 w-4 h-4" /> {githubLabel}
                         </a>
                     </Button>
                 )}
@@ -64,7 +84,7 @@ export function Project(props: NonNullable<PROJECT_QUERYResult>) {
               <div className="relative rounded-xl w-full h-[300px] md:h-[500px] overflow-hidden">
                 <Image
                     src={urlFor(mainImage).width(1200).height(600).url()}
-                    alt={mainImage.alt || title || "Project Image"}
+                    alt={mainImage.alt || title || projectImageAlt}
                     fill
                     className="object-cover"
                     priority
@@ -77,14 +97,14 @@ export function Project(props: NonNullable<PROJECT_QUERYResult>) {
              {body ? (
                 <PortableText value={body} components={components} />
              ) : (
-                <p className="text-muted-foreground italic">No detailed description provided.</p>
+                <p className="text-muted-foreground italic">{noDescriptionLabel}</p>
              )}
           </div>
 
           <div className="lg:col-span-4 lg:pl-12">
              {technologies && technologies.length > 0 && (
                 <div className="bg-muted/30 p-6 rounded-2xl">
-                    <h3 className="mb-4 font-semibold text-lg">Technologies</h3>
+                    <h3 className="mb-4 font-semibold text-lg">{technologiesLabel}</h3>
                     <div className="flex flex-wrap gap-2">
                          {technologies.map((tech) => (
                             <Badge
@@ -107,6 +127,16 @@ export function Project(props: NonNullable<PROJECT_QUERYResult>) {
                 </div>
              )}
           </div>
+        </div>
+
+        <div className="mt-12 pt-8 border-t">
+          <Link
+            href={`/${lang}/projects`}
+            className="group inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors font-medium"
+          >
+            <MoveLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+            {backToProjectsLabel}
+          </Link>
         </div>
       </CardContent>
     </Card>

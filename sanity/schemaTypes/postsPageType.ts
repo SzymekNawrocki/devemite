@@ -54,6 +54,13 @@ export const postsPageType = defineType({
       description: 'Text shown when there is no body content (e.g., "No detailed description provided.")',
     }),
     defineField({
+      name: "postImageAlt",
+      type: "string",
+      title: "Post Image Alt Text",
+      description: "Fallback alt text for post images (e.g., 'Post Image')",
+      initialValue: "Post Image",
+    }),
+    defineField({
       name: "relatedPostsEyebrow",
       type: "string",
       title: "Related posts eyebrow",

@@ -51,6 +51,20 @@ export const projectsPageType = defineType({
       description: 'Text shown when there is no body content (e.g., "No detailed description provided.")',
     }),
     defineField({
+      name: "projectImageAlt",
+      type: "string",
+      title: "Project Image Alt Text",
+      description: "Fallback alt text for project images (e.g., 'Project Image')",
+      initialValue: "Project Image",
+    }),
+    defineField({
+      name: "githubLabel",
+      type: "string",
+      title: "GitHub Button Label",
+      description: "Text for GitHub button (e.g., 'GitHub')",
+      initialValue: "GitHub",
+    }),
+    defineField({
       name: "backToHomeLabel",
       type: "string",
       title: "Back to Home label",

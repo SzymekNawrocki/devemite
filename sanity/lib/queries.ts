@@ -31,6 +31,7 @@ export const POSTS_PAGE_QUERY = defineQuery(`
     backToBlogLabel,
     minReadLabel,
     noDescriptionLabel,
+    postImageAlt,
     relatedPostsEyebrow,
     relatedPostsTitle,
     emptyStateTitle,
@@ -160,6 +161,8 @@ export const PROJECTS_PAGE_QUERY = defineQuery(`
     backToProjectsLabel,
     technologiesLabel,
     noDescriptionLabel,
+    projectImageAlt,
+    githubLabel,
     backToHomeLabel,
     "seo": {
       "title": coalesce(seo.title, title, ""),
@@ -479,6 +482,20 @@ export const REDIRECTS_QUERY = defineQuery(`
   }
 `);
 
+export const CONTACT_SETTINGS_QUERY = defineQuery(`
+  *[_type == "contactSettings" && language == $lang][0]{
+    nameLabel,
+    namePlaceholder,
+    emailLabel,
+    emailPlaceholder,
+    messageLabel,
+    messagePlaceholder,
+    submitButtonLabel,
+    successMessage,
+    errorMessage
+  }
+`);
+
 export const OG_IMAGE_QUERY = defineQuery(`
   *[_id == $id][0]{
     title,
@@ -500,9 +517,21 @@ export const SITEMAP_QUERY = defineQuery(`
   }
 `);
 
+export const SITE_SETTINGS_QUERY = defineQuery(`
+  *[_type == "siteSettings" && language == $lang][0]{
+    themeToggleLabel,
+    lightThemeLabel,
+    darkThemeLabel,
+    systemThemeLabel,
+    breadcrumbHomeLabel
+  }
+`);
+
 export const HEADER_QUERY = defineQuery(`
   *[_type == "header" && language == $lang][0]{
     logoImage,
+    logoAlt,
+    menuLabel,
     navigation[]{
       label,
       href
@@ -513,6 +542,8 @@ export const HEADER_QUERY = defineQuery(`
 export const FOOTER_QUERY = defineQuery(`
   *[_type == "footer" && language == $lang][0]{
     logoImage,
+    logoAlt,
+    copyrightText,
     privacyPolicyLink{
       label,
       href

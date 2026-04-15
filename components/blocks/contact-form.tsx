@@ -131,7 +131,11 @@ export function ContactForm({ settings }: ContactFormProps) {
 					<Button type='submit' className='w-full h-12 text-base font-bold' disabled={form.formState.isSubmitting}>
 						{form.formState.isSubmitting ? '...' : submitButtonLabel}
 					</Button>
-					{/* ... status message ... */}
+					{status.type && status.message && (
+						<p className={status.type === 'success' ? 'text-sm text-green-600' : 'text-sm text-destructive'}>
+							{status.message}
+						</p>
+					)}
 				</form>
 			</CardContent>
 		</Card>

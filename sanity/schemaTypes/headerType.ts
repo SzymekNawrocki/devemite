@@ -17,6 +17,13 @@ export const headerType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "logoAlt",
+      title: "Logo Alt Text",
+      type: "string",
+      description: "Alternative text for the logo (e.g., 'Logo Devemite')",
+      initialValue: "Logo",
+    }),
+    defineField({
       name: "navigation",
       title: "Navigation",
       type: "array",
@@ -30,6 +37,13 @@ export const headerType = defineType({
           ],
         },
       ],
+    }),
+    defineField({
+      name: "menuLabel",
+      title: "Mobile Menu Label",
+      type: "string",
+      description: "Label for mobile menu button (e.g., 'Menu')",
+      initialValue: "Menu",
     }),
     defineField({
       name: "language",
