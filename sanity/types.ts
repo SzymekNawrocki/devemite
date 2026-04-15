@@ -998,8 +998,11 @@ export type POSTS_PAGE_QUERYResult = {
     seoImage: null;
   };
 } | null;
+// Variable: POSTS_COUNT_QUERY
+// Query: count(*[_type == "post" && defined(slug.current) && language == $lang])
+export type POSTS_COUNT_QUERYResult = number;
 // Variable: POSTS_QUERY
-// Query: *[_type == "post" && defined(slug.current) && language == $lang]  | order(publishedAt desc)[0...$limit]{    _id,    title,    slug,    excerpt,    body,    mainImage,    publishedAt,    "categories": coalesce(      categories[]->{_id, slug, title},      []    ),    author->{name, image},    relatedPosts[]{      _key,      ...@->{        _id,        title,        slug,        language      }    },    "seo": {      "title": coalesce(seo.title, title, ""),      "description": coalesce(seo.description, ""),      "seoImage": seo.seoImage    }  }
+// Query: *[_type == "post" && defined(slug.current) && language == $lang]  | order(publishedAt desc)[$offset...($offset + $limit)]{    _id,    title,    slug,    excerpt,    body,    mainImage,    publishedAt,    "categories": coalesce(      categories[]->{_id, slug, title},      []    ),    author->{name, image},    relatedPosts[]{      _key,      ...@->{        _id,        title,        slug,        language      }    },    "seo": {      "title": coalesce(seo.title, title, ""),      "description": coalesce(seo.description, ""),      "seoImage": seo.seoImage    }  }
 export type POSTS_QUERYResult = Array<{
   _id: string;
   title: string;

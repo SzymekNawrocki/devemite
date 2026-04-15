@@ -1,10 +1,10 @@
 import { client } from "@/sanity/lib/client";
 import { SectionTitle } from "@/components/ui/section-title";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
-import { HOME_TITLE_QUERY, POSTS_QUERY, POSTS_PAGE_QUERY } from "@/sanity/lib/queries";
+import { HOME_TITLE_QUERY, POSTS_QUERY, POSTS_PAGE_QUERY, POSTS_COUNT_QUERY } from "@/sanity/lib/queries";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { PostCard } from "@/components/blog/post-card";
-import { MoveLeft } from "lucide-react";
+import { MoveLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { Metadata } from "next";
@@ -12,8 +12,11 @@ import { urlFor } from "@/sanity/lib/image";
 
 import { POSTS_QUERYResult, POSTS_PAGE_QUERYResult } from "@/sanity/types";
 
+const PAGE_SIZE = 12;
+
 type Props = {
-  params: Promise<{ lang: string }> | { lang: string };
+  params: Promise<{ lang: string }>;
+  searchParams: Promise<{ page?: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -50,25 +53,32 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return metadata;
 }
 
-export default async function Page({
-  params,
-}: Props) {
-  const resolvedParams = await params;
-  const { lang } = resolvedParams;
+export default async function Page({ params, searchParams }: Props) {
+  const { lang } = await params;
+  const { page } = await searchParams;
 
-  const [posts, pageData, homeData]: [POSTS_QUERYResult, POSTS_PAGE_QUERYResult, any] = await Promise.all([
-    client.fetch(POSTS_QUERY, { lang, limit: 12 }),
-    client.fetch(POSTS_PAGE_QUERY, { lang }),
-    client.fetch(HOME_TITLE_QUERY, { lang }),
-  ]);
+  const currentPage = Math.max(1, parseInt(page ?? "1", 10));
+  const offset = (currentPage - 1) * PAGE_SIZE;
+
+  const [posts, pageData, homeData, totalCount]: [POSTS_QUERYResult, POSTS_PAGE_QUERYResult, any, number] =
+    await Promise.all([
+      client.fetch(POSTS_QUERY, { lang, limit: PAGE_SIZE, offset }),
+      client.fetch(POSTS_PAGE_QUERY, { lang }),
+      client.fetch(HOME_TITLE_QUERY, { lang }),
+      client.fetch(POSTS_COUNT_QUERY, { lang }),
+    ]);
+
+  const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+  const hasPrev = currentPage > 1;
+  const hasNext = currentPage < totalPages;
 
   return (
     <section className="pt-28 md:pt-40 pb-24">
       <Container>
-        <Breadcrumbs 
+        <Breadcrumbs
           homeLabel={homeData?.title || "Home"}
-          items={[{ label: pageData?.title || "Blog", href: "/posts" }]} 
-          className="mb-4" 
+          items={[{ label: pageData?.title || "Blog", href: "/posts" }]}
+          className="mb-4"
         />
         <header className="mb-16">
           {pageData?.eyebrow && <Eyebrow text={pageData.eyebrow} />}
@@ -86,11 +96,49 @@ export default async function Page({
             ))
           ) : (
             <div className="py-20 text-center">
-               <h2 className="text-2xl font-semibold">{pageData?.emptyStateTitle || "No posts yet"}</h2>
-               <p className="mt-2 text-muted-foreground">{pageData?.emptyStateDescription || "Check back soon for new articles."}</p>
+              <h2 className="text-2xl font-semibold">{pageData?.emptyStateTitle || "No posts yet"}</h2>
+              <p className="mt-2 text-muted-foreground">{pageData?.emptyStateDescription || "Check back soon for new articles."}</p>
             </div>
           )}
         </div>
+
+        {totalPages > 1 && (
+          <div className="mt-12 flex items-center justify-center gap-4">
+            {hasPrev ? (
+              <Link
+                href={`/${lang}/posts?page=${currentPage - 1}`}
+                className="inline-flex items-center gap-1 px-4 py-2 rounded-md border border-border/60 text-sm font-medium hover:bg-muted transition-colors"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                Prev
+              </Link>
+            ) : (
+              <span className="inline-flex items-center gap-1 px-4 py-2 rounded-md border border-border/20 text-sm font-medium text-muted-foreground cursor-not-allowed">
+                <ChevronLeft className="w-4 h-4" />
+                Prev
+              </span>
+            )}
+
+            <span className="text-sm text-muted-foreground">
+              {currentPage} / {totalPages}
+            </span>
+
+            {hasNext ? (
+              <Link
+                href={`/${lang}/posts?page=${currentPage + 1}`}
+                className="inline-flex items-center gap-1 px-4 py-2 rounded-md border border-border/60 text-sm font-medium hover:bg-muted transition-colors"
+              >
+                Next
+                <ChevronRight className="w-4 h-4" />
+              </Link>
+            ) : (
+              <span className="inline-flex items-center gap-1 px-4 py-2 rounded-md border border-border/20 text-sm font-medium text-muted-foreground cursor-not-allowed">
+                Next
+                <ChevronRight className="w-4 h-4" />
+              </span>
+            )}
+          </div>
+        )}
 
         <div className="mt-20 pt-8 border-t">
           <Link
