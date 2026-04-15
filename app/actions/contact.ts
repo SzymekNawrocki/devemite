@@ -35,7 +35,7 @@ export async function submitContactForm(data: ContactFormData & { website?: stri
       console.error("Missing RESEND_API_KEY env var. Skipping email notification.");
     } else {
       const { data: _emailData, error: emailError } = await resend.emails.send({
-        from: "Portfolio Contact <onboarding@resend.dev>",
+        from: process.env.RESEND_FROM_EMAIL ?? "Portfolio Contact <onboarding@resend.dev>",
         to: [process.env.CONTACT_EMAIL ?? ""],
         subject: `Nowa wiadomość od: ${validatedData.name}`,
         html: `<p><strong>Imię:</strong> ${validatedData.name}</p>
