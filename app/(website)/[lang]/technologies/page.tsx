@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { sanityFetch } from "@/sanity/lib/client";
-import { TECHNOLOGIES_QUERYResult } from "@/sanity/types";
+import { TECHNOLOGIES_QUERYResult, TECHNOLOGIES_PAGE_QUERYResult, HOME_TITLE_QUERYResult, HEADER_QUERYResult } from "@/sanity/types";
 import { Container } from "@/components/ui/container";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { SectionTitle } from "@/components/ui/section-title";
@@ -26,7 +26,7 @@ export default async function Page({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const [technologies, homeData, headerData, pageData]: [TECHNOLOGIES_QUERYResult, any, any, any] = await Promise.all([
+  const [technologies, homeData, headerData, pageData]: [TECHNOLOGIES_QUERYResult, HOME_TITLE_QUERYResult, HEADER_QUERYResult, TECHNOLOGIES_PAGE_QUERYResult] = await Promise.all([
     sanityFetch({
       query: TECHNOLOGIES_QUERY,
       params: { lang },
@@ -48,7 +48,7 @@ export default async function Page({
   ]);
 
   const technologiesLabel = pageData?.title ||
-    headerData?.navigation?.find((n: any) => n.href === "/technologies")?.label || "Technologies";
+    headerData?.navigation?.find((n) => n.href === "/technologies")?.label || "Technologies";
   
   const description = pageData?.description || "A comprehensive list of the tools, frameworks, and technologies that drive our projects and solutions.";
   const emptyStateTitle = pageData?.emptyStateTitle || "No technologies found";

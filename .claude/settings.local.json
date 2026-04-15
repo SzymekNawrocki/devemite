@@ -3,7 +3,10 @@
     "allow": [
       "Bash(grep -E \"Type.ts$\")",
       "Bash(npx tsc:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(npx sanity:*)",
+      "Bash(git stash:*)",
+      "Bash(git checkout:*)"
     ]
   }
 }

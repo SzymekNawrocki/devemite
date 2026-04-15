@@ -5633,7 +5633,18 @@ export type SERVICES_PAGE_QUERYResult = {
 } | null;
 // Variable: TECHNOLOGIES_PAGE_QUERY
 // Query: *[_type == "technologiesPage" && language == $lang][0]{    title,    description,    backToHomeLabel,    emptyStateTitle,    emptyStateDescription,    "seo": {      "title": coalesce(seo.title, title, ""),      "description": coalesce(seo.description, description, ""),      "seoImage": seo.seoImage    }  }
-export type TECHNOLOGIES_PAGE_QUERYResult = null;
+export type TECHNOLOGIES_PAGE_QUERYResult = {
+  title: string | null;
+  description: string | null;
+  backToHomeLabel: string | null;
+  emptyStateTitle: string | null;
+  emptyStateDescription: string | null;
+  seo: {
+    title: string;
+    description: string;
+    seoImage: null;
+  };
+} | null;
 // Variable: SERVICES_SLUGS_QUERY
 // Query: *[_type == "service" && defined(slug.current) && language == $lang]{    "slug": slug.current,    language  }
 export type SERVICES_SLUGS_QUERYResult = Array<{
