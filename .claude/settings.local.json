@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(grep -E \"Type.ts$\")",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npm run:*)"
     ]
   }
 }
