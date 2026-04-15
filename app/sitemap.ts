@@ -10,9 +10,7 @@ type SitemapPath = {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
-    const baseUrl = process.env.VERCEL
-      ? `https://${process.env.VERCEL_URL}`
-      : "http://localhost:3000";
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 
     const allUrls = await Promise.all(
