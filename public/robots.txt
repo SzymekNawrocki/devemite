@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /studio
+Sitemap: https://devemite.vercel.app/sitemap.xml

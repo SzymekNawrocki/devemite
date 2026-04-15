@@ -34,15 +34,22 @@ export async function generateMetadata({ params }: RouteProps): Promise<Metadata
     return {};
   }
 
+  const { slug, lang } = resolvedParams;
+  const canonicalUrl = `/${lang}/projects/${slug}`;
+
   const metadata: Metadata = {
     title: project.seo?.title || project.title,
     description: project.seo?.description || project.description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
   };
 
   if (project.seo?.seoImage || project.mainImage) {
       const image = project.seo?.seoImage || project.mainImage;
        if (image) {
           metadata.openGraph = {
+            url: canonicalUrl,
             images: [
               {
                 url: urlFor(image).width(1200).height(630).url(),

@@ -29,13 +29,19 @@ export async function generateMetadata({ params }: RouteProps): Promise<Metadata
     return {};
   }
 
+  const { slug, lang } = resolvedParams;
+  const canonicalUrl = `/${lang}/${slug}`;
+
   const metadata: Metadata = {
-    metadataBase: new URL("https://acme.com"),
     title: page.seo.title,
     description: page.seo.description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
   };
 
   metadata.openGraph = {
+    url: canonicalUrl,
     images: [
       {
         url: page.seo.seoImage

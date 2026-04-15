@@ -25,9 +25,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   const { data: siteSettings } = await sanityFetch({ query: SITE_SETTINGS_QUERY, params: { lang } });
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://devemite.vercel.app";
   return {
+    metadataBase: new URL(baseUrl),
     title: siteSettings?.seoTitle ?? "Devemite - Where every grain holds a story",
     description: siteSettings?.seoDescription ?? "Devemite - Where every grain holds a story. A portfolio/blog website of a developer Szymon Nawrocki",
+    manifest: "/manifest.json",
+    icons: {
+      apple: "/apple-touch-icon.png",
+    },
   };
 }
 

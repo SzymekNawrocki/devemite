@@ -24,13 +24,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!pageData) return {};
 
+  const canonicalUrl = `/${lang}/posts`;
+
   const metadata: Metadata = {
     title: pageData.seo?.title || pageData.title,
     description: pageData.seo?.description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
   };
 
   if (pageData.seo?.seoImage) {
     metadata.openGraph = {
+      url: canonicalUrl,
       images: [
         {
           url: urlFor(pageData.seo.seoImage).width(1200).height(630).url(),

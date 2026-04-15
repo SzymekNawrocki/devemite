@@ -30,15 +30,21 @@ export async function generateMetadata({ params }: RouteProps): Promise<Metadata
     return {};
   }
 
+  const canonicalUrl = `/${lang}/posts/${slug}`;
+
   const metadata: Metadata = {
     title: post.seo?.title || post.title,
     description: post.seo?.description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
   };
 
   if (post.seo?.seoImage || post.mainImage) {
     const image = post.seo?.seoImage || post.mainImage;
     if (image) {
       metadata.openGraph = {
+        url: canonicalUrl,
         images: [
           {
             url: urlFor(image).width(1200).height(630).url(),
