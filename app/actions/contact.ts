@@ -16,7 +16,11 @@ const writeClient = createClient({
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export async function submitContactForm(data: ContactFormData) {
+export async function submitContactForm(data: ContactFormData & { website?: string }) {
+  if (data.website) {
+    return { success: false, message: "Spam detected." };
+  }
+
   try {
 
     const validatedData = contactSchema.parse(data);

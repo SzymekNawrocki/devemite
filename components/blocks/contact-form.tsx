@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -43,6 +43,8 @@ export function ContactForm({ settings }: ContactFormProps) {
 		errorMessage = 'Something went wrong. Please try again.',
 	} = settings || {}
 
+	const websiteRef = useRef<HTMLInputElement>(null)
+
 	const form = useForm<ContactFormData>({
 		resolver: zodResolver(contactSchema),
 		defaultValues: {
@@ -56,7 +58,7 @@ export function ContactForm({ settings }: ContactFormProps) {
 		setStatus({ type: null, message: null })
 
 		try {
-			const result = await submitContactForm(data)
+			const result = await submitContactForm({ ...data, website: websiteRef.current?.value ?? '' })
 			if (result.success) {
 				setStatus({ type: 'success', message: successMessage })
 				form.reset()
@@ -127,6 +129,18 @@ export function ContactForm({ settings }: ContactFormProps) {
 						{form.formState.errors.message && (
 							<p className='text-sm text-destructive mt-1'>{form.formState.errors.message.message}</p>
 						)}
+					</div>
+					{/* Honeypot — hidden from real users via off-screen positioning; bots and screen readers can still see it */}
+					<div className='absolute left-[-9999px] top-[-9999px] w-px h-px overflow-hidden' aria-hidden='true'>
+						<label htmlFor='website'>Website</label>
+						<input
+							ref={websiteRef}
+							id='website'
+							name='website'
+							type='text'
+							tabIndex={-1}
+							autoComplete='off'
+						/>
 					</div>
 					<Button type='submit' className='w-full h-12 text-base font-bold' disabled={form.formState.isSubmitting}>
 						{form.formState.isSubmitting ? '...' : submitButtonLabel}
