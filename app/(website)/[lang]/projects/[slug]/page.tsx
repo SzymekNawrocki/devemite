@@ -84,7 +84,7 @@ export default async function Page({ params }: RouteProps) {
   ]);
 
   const projectsLabel = projectsPageData?.title ||
-    headerData?.navigation?.find((n: any) => n.href === "/projects")?.label || "Projects";
+    headerData?.navigation?.find((n: { label: string | null; href: string | null }) => n.href === "/projects")?.label || "Projects";
 
   const pageSettings = {
     technologiesLabel: projectsPageData?.technologiesLabel ?? undefined,
