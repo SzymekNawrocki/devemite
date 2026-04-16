@@ -3,7 +3,6 @@
 import { useLocale } from 'next-intl';
 import { useRouter, usePathname } from 'next/navigation';
 import { useTransition } from 'react';
-import Flag from 'react-world-flags'; 
 import {
   Select,
   SelectContent,
@@ -12,9 +11,9 @@ import {
 } from '@/components/ui/select';
 
 const languages = [
-  { code: 'pl', label: 'Polski', country: 'PL' },
-  { code: 'en', label: 'English', country: 'GB' }, 
-  { code: 'de', label: 'Deutsch', country: 'DE' },
+  { code: 'pl', label: 'Polski', flag: '🇵🇱' },
+  { code: 'en', label: 'English', flag: '🇬🇧' },
+  { code: 'de', label: 'Deutsch', flag: '🇩🇪' },
 ];
 
 export default function LanguageSwitcher({ scrolled }: { scrolled?: boolean }) {
@@ -46,10 +45,9 @@ export default function LanguageSwitcher({ scrolled }: { scrolled?: boolean }) {
         }`}
       >
         <div className="flex items-center gap-2.5">
-          <Flag 
-            code={currentLanguage.country} 
-            className="w-5 h-3.5 object-cover rounded-[2px] shadow-sm" 
-          />
+          <span aria-hidden="true" className="text-base leading-none">
+            {currentLanguage.flag}
+          </span>
           <span className="text-sm font-medium tracking-wide">
             {currentLanguage.label}
           </span>
@@ -65,7 +63,9 @@ export default function LanguageSwitcher({ scrolled }: { scrolled?: boolean }) {
             className="cursor-pointer"
           >
             <div className="flex items-center gap-3">
-              <Flag code={lang.country} className="w-5 h-3.5 object-cover rounded-[2px]" />
+              <span aria-hidden="true" className="text-base leading-none">
+                {lang.flag}
+              </span>
               <span className="font-medium">{lang.label}</span>
             </div>
           </SelectItem>

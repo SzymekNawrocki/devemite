@@ -51,8 +51,8 @@ export function Footer({ data }: { data: FOOTER_QUERYResult }) {
                 {link.iconImage && (
                   <Image
                     src={urlFor(link.iconImage).url()}
-                    alt={link.platform ?? ""}
-                    width={24} 
+                    alt=""
+                    width={24}
                     height={24}
                     className="w-6 h-6"
                   />
