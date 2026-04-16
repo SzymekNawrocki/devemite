@@ -2,11 +2,12 @@ import { PortableText } from "next-sanity";
 import { components } from "@/sanity/components/portableTextComponents";
 import { Container } from "../ui/container";
 import { cn } from "@/lib/utils";
+import { BlockContent } from "@/sanity/types";
 
 interface RichTextProps {
   _type: "richText";
   _key: string;
-  body: any;
+  body: BlockContent;
   alignment?: "left" | "center";
 }
 

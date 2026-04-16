@@ -13,7 +13,7 @@ type HeroProps = Extract<
 export function Hero(props: HeroProps) {
   const { title, text, image } = props;
 
-  const isExpandedImage = (img: any): img is { asset: any } => {
+  const isExpandedImage = (img: unknown): img is NonNullable<HeroProps["image"]> => {
     return !!img && typeof img === "object" && "asset" in img;
   };
   return (

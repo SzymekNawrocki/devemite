@@ -26,8 +26,7 @@ export const breadcrumbDictionary: Record<Locale, Record<string, string>> = {
  * If not found, returns null.
  */
 export function getDictionaryLabel(segment: string, locale: Locale): string | null {
-  const currentLocale = (locale as any) || "en";
-  const dictionary = breadcrumbDictionary[currentLocale as Locale];
+  const dictionary = breadcrumbDictionary[locale];
   const normalizedSegment = segment.toLowerCase().replace(/^\//, "");
 
   if (dictionary && dictionary[normalizedSegment]) {

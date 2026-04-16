@@ -13,7 +13,7 @@ type ContactSectionProps = Extract<
 export function ContactSection(props: ContactSectionProps) {
   const { title, description, contactDetails, showForm, formSettings } = props;
 
-  const portableTextValue = Array.isArray(description) ? (description as any) : null;
+  const portableTextValue = Array.isArray(description) ? description : null;
   return (
     <section className="py-16">
       <Container>

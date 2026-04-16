@@ -16,7 +16,7 @@ export default async function Page({
     client.fetch(HEADER_QUERY, { lang }),
   ]);
 
-  const projectsLabel = headerData?.navigation?.find((n: any) => n.href === "/projects")?.label || "Projects";
+  const projectsLabel = headerData?.navigation?.find((n) => n.href === "/projects")?.label || "Projects";
 
   return (
     <main className="min-h-screen pt-28 md:pt-40">

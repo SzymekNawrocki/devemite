@@ -10,9 +10,9 @@ import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { routing } from "@/i18n/routing";
 import { PageBuilder } from "@/components/sanity/page-builder";
 import { Container } from "@/components/ui/container";
-import { Globe, Code, Mail, Server, Cpu, Layers, Zap, LineChart, Database, Monitor } from "lucide-react";
+import { Globe, Code, Mail, Server, Cpu, Layers, Zap, LineChart, Database, Monitor, type LucideIcon } from "lucide-react";
 
-const iconsMap: any = {
+const iconsMap: Record<string, LucideIcon> = {
   Globe,
   Code,
   Mail,
@@ -65,7 +65,7 @@ export default async function Page({
     }),
   ]);
 
-  const servicesLabel = headerData?.navigation?.find((n: any) => n.href === "/services")?.label || "Services";
+  const servicesLabel = headerData?.navigation?.find((n) => n.href === "/services")?.label || "Services";
 
   if (!service) notFound();
 

@@ -1,9 +1,10 @@
 import { PortableText } from "next-sanity";
 import { components } from "@/sanity/components/portableTextComponents";
 import { cn } from "@/lib/utils";
+import { BlockContent } from "@/sanity/types";
 
 interface TechnologyDetailsProps {
-  body: any;
+  body: BlockContent | null;
   className?: string;
 }
 

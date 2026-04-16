@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { Globe, Code, Mail, Server, Cpu, Layers, Zap, LineChart, Database, Monitor } from "lucide-react";
+import { Globe, Code, Mail, Server, Cpu, Layers, Zap, LineChart, Database, Monitor, type LucideIcon } from "lucide-react";
 import { PAGE_QUERYResult } from "@/sanity/types";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Eyebrow } from "../ui/eyebrow";
 import { SectionTitle } from "../ui/section-title";
 import { Container } from "../ui/container";
 
-const iconsMap: any = {
+const iconsMap: Record<string, LucideIcon> = {
   Globe,
   Code,
   Mail,
@@ -22,7 +22,7 @@ const iconsMap: any = {
 type ServicesBlockProps = Extract<
   NonNullable<NonNullable<PAGE_QUERYResult>["content"]>[number],
   { _type: "servicesBlock" }
-> & { readMoreLabel?: string; documentType?: string };
+> & { readMoreLabel?: string | null; documentType?: string };
 
 export function ServicesBlock(props: ServicesBlockProps) {
   const isExpanded = (

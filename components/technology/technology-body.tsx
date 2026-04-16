@@ -1,8 +1,9 @@
 import { PortableText } from "next-sanity";
 import { components } from "@/sanity/components/portableTextComponents";
+import { BlockContent } from "@/sanity/types";
 
 interface TechnologyBodyProps {
-  body: any;
+  body: BlockContent | null;
 }
 
 export function TechnologyBody({ body }: TechnologyBodyProps) {

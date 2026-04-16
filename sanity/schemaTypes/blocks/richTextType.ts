@@ -31,14 +31,14 @@ export const richTextType = defineType({
     select: {
       body: "body",
     },
-    prepare({ body }) {
-      const block = (body || []).find((block: any) => block._type === "block");
+    prepare({ body }: { body?: Array<{ _type: string; children?: Array<{ _type: string; text?: string }> }> }) {
+      const block = (body || []).find((b) => b._type === "block");
       return {
         title: "Rich Text Content",
         subtitle: block
           ? block.children
-              .filter((child: any) => child._type === "span")
-              .map((span: any) => span.text)
+              ?.filter((child) => child._type === "span")
+              .map((span) => span.text)
               .join("")
           : "No content",
       };

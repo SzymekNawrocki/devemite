@@ -45,7 +45,7 @@ export function PageBuilder({
   documentType,
   disablePadding = false,
 }: {
-  content: any[];
+  content: NonNullable<PAGE_QUERYResult>["content"];
   documentId?: string;
   documentType?: string;
   disablePadding?: boolean;

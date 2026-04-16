@@ -54,7 +54,7 @@ export default async function Page({
     }),
   ]);
 
-  const technologiesLabel = headerData?.navigation?.find((n: any) => n.href === "/technologies")?.label || "Technologies";
+  const technologiesLabel = headerData?.navigation?.find((n) => n.href === "/technologies")?.label || "Technologies";
 
   if (!tech) notFound();
 

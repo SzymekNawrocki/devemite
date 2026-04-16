@@ -54,7 +54,7 @@ export function Breadcrumbs({ items = [], homeLabel, className }: BreadcrumbsPro
               <BreadcrumbItem>
                 {item.href && !isLast ? (
                   <BreadcrumbLink asChild>
-                    <Link href={item.href as any}>{segmentLabel}</Link>
+                    <Link href={item.href}>{segmentLabel}</Link>
                   </BreadcrumbLink>
                 ) : (
                   <BreadcrumbPage>{segmentLabel}</BreadcrumbPage>

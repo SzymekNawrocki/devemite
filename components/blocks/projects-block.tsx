@@ -8,21 +8,32 @@ import { Eyebrow } from "../ui/eyebrow";
 import { SectionTitle } from "../ui/section-title";
 import { Container } from "../ui/container";
 
+type ExpandedProjectsBlock = Extract<
+  NonNullable<NonNullable<PAGE_QUERYResult>["content"]>[number],
+  { _type: "projectsBlock"; projects: Array<{ _id: string }> }
+>;
+
+type ProjectEntry = ExpandedProjectsBlock["projects"][number];
+
 type ProjectsBlockProps = Partial<Extract<
   NonNullable<NonNullable<PAGE_QUERYResult>["content"]>[number],
   { _type: "projectsBlock" }
 >> & {
   _type?: "projectsBlock";
-  detailsLabel?: string;
+  detailsLabel?: string | null;
   projectImageAlt?: string;
+};
+
+type ExpandedProjectsBlockProps = Omit<ProjectsBlockProps, "projects"> & {
+  projects: ProjectEntry[];
 };
 
 export function ProjectsBlock(props: ProjectsBlockProps) {
   // Use a type guard to narrow the entire props object
   const isExpanded = (
     p: ProjectsBlockProps
-  ): p is Extract<ProjectsBlockProps, { projects: Array<any> }> => {
-    return !!p.projects && p.projects.length > 0;
+  ): p is ExpandedProjectsBlockProps => {
+    return !!p.projects && p.projects.length > 0 && "_id" in p.projects[0];
   };
 
   if (!isExpanded(props)) {
@@ -34,7 +45,7 @@ export function ProjectsBlock(props: ProjectsBlockProps) {
   const imageAltFallback = projectImageAlt || "Project Image";
 
   const displayProjects =
-    mode === "all" ? (projects as any[]).slice(0, limit || 6) : projects;
+    mode === "all" ? projects.slice(0, limit || 6) : projects;
 
   return (
     <section className="py-16">
@@ -50,7 +61,7 @@ export function ProjectsBlock(props: ProjectsBlockProps) {
         </div>
 
         <div className="gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {(displayProjects as any[]).map((project: any) => (
+          {displayProjects.map((project) => (
             <div
               key={project._id}
               className="flex flex-col bg-card border border-border rounded-xl overflow-hidden"
@@ -83,7 +94,7 @@ export function ProjectsBlock(props: ProjectsBlockProps) {
                 )}
 
                 <div className="flex flex-wrap gap-2 mt-auto mb-6">
-                    {(project.technologies as any[])?.filter(Boolean).map((tech: any) => (
+                    {project.technologies?.filter(Boolean).map((tech) => (
                         <div
                           key={tech?._id}
                           className="flex items-center gap-2 bg-secondary/50 px-2 py-1.5 rounded-md"
