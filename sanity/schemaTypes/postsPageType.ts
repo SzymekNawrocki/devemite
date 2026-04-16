@@ -79,6 +79,20 @@ export const postsPageType = defineType({
       description: 'Title for the related posts section (e.g., "Related posts")',
     }),
     defineField({
+      name: "prevPageLabel",
+      type: "string",
+      title: "Previous page label",
+      description: 'Text for the "Previous" pagination button (e.g., "Prev")',
+      initialValue: "Prev",
+    }),
+    defineField({
+      name: "nextPageLabel",
+      type: "string",
+      title: "Next page label",
+      description: 'Text for the "Next" pagination button (e.g., "Next")',
+      initialValue: "Next",
+    }),
+    defineField({
       name: "emptyStateTitle",
       type: "string",
       title: "Empty state title",

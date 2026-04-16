@@ -46,6 +46,7 @@ export function Footer({ data }: { data: FOOTER_QUERYResult }) {
                 rel="noopener noreferrer"
                 className="text-primary/60 hover:text-primary transition-all hover:scale-125 transform"
                 title={link.platform ?? undefined}
+                aria-label={link.platform ?? "Social link"}
               >
                 {link.iconImage && (
                   <Image

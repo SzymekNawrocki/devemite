@@ -58,6 +58,8 @@ export const POSTS_PAGE_QUERY = defineQuery(`
     postImageAlt,
     relatedPostsEyebrow,
     relatedPostsTitle,
+    prevPageLabel,
+    nextPageLabel,
     emptyStateTitle,
     emptyStateDescription,
     "seo": {

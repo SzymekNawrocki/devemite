@@ -110,41 +110,49 @@ export default async function Page({ params, searchParams }: Props) {
         </div>
 
         {totalPages > 1 && (
-          <div className="mt-12 flex items-center justify-center gap-4">
+          <nav aria-label="Blog pagination" className="mt-12 flex items-center justify-center gap-4">
             {hasPrev ? (
               <Link
                 href={`/${lang}/posts?page=${currentPage - 1}`}
+                aria-label={`${pageData?.prevPageLabel || "Prev"}, page ${currentPage - 1}`}
                 className="inline-flex items-center gap-1 px-4 py-2 rounded-md border border-border/60 text-sm font-medium hover:bg-muted transition-colors"
               >
                 <ChevronLeft className="w-4 h-4" />
-                Prev
+                {pageData?.prevPageLabel || "Prev"}
               </Link>
             ) : (
-              <span className="inline-flex items-center gap-1 px-4 py-2 rounded-md border border-border/20 text-sm font-medium text-muted-foreground cursor-not-allowed">
+              <span
+                aria-disabled="true"
+                className="inline-flex items-center gap-1 px-4 py-2 rounded-md border border-border/20 text-sm font-medium text-muted-foreground cursor-not-allowed"
+              >
                 <ChevronLeft className="w-4 h-4" />
-                Prev
+                {pageData?.prevPageLabel || "Prev"}
               </span>
             )}
 
-            <span className="text-sm text-muted-foreground">
+            <span className="text-sm text-muted-foreground" aria-current="page">
               {currentPage} / {totalPages}
             </span>
 
             {hasNext ? (
               <Link
                 href={`/${lang}/posts?page=${currentPage + 1}`}
+                aria-label={`${pageData?.nextPageLabel || "Next"}, page ${currentPage + 1}`}
                 className="inline-flex items-center gap-1 px-4 py-2 rounded-md border border-border/60 text-sm font-medium hover:bg-muted transition-colors"
               >
-                Next
+                {pageData?.nextPageLabel || "Next"}
                 <ChevronRight className="w-4 h-4" />
               </Link>
             ) : (
-              <span className="inline-flex items-center gap-1 px-4 py-2 rounded-md border border-border/20 text-sm font-medium text-muted-foreground cursor-not-allowed">
-                Next
+              <span
+                aria-disabled="true"
+                className="inline-flex items-center gap-1 px-4 py-2 rounded-md border border-border/20 text-sm font-medium text-muted-foreground cursor-not-allowed"
+              >
+                {pageData?.nextPageLabel || "Next"}
                 <ChevronRight className="w-4 h-4" />
               </span>
             )}
-          </div>
+          </nav>
         )}
 
         <div className="mt-20 pt-8 border-t">

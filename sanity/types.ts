@@ -1007,6 +1007,8 @@ export type POSTS_PAGE_QUERYResult = {
   postImageAlt: string | null;
   relatedPostsEyebrow: string | null;
   relatedPostsTitle: string | null;
+  prevPageLabel: string | null;
+  nextPageLabel: string | null;
   emptyStateTitle: string | null;
   emptyStateDescription: string | null;
   seo: {
