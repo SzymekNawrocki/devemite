@@ -126,15 +126,25 @@ export function ProjectsBlock(props: ProjectsBlockProps) {
                   )}
                      {project.githubLink && (
                         <Button asChild variant="ghost" size="icon">
-                             <a href={project.githubLink} target="_blank" rel="noopener noreferrer">
-                                <Github className="w-5 h-5" />
+                             <a
+                               href={project.githubLink}
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               aria-label={`GitHub — ${project.title}`}
+                             >
+                                <Github className="w-5 h-5" aria-hidden="true" />
                              </a>
                         </Button>
                     )}
                      {project.projectLink && (
                         <Button asChild variant="ghost" size="icon">
-                             <a href={project.projectLink} target="_blank" rel="noopener noreferrer">
-                                <ExternalLink className="w-5 h-5" />
+                             <a
+                               href={project.projectLink}
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               aria-label={`Live demo — ${project.title}`}
+                             >
+                                <ExternalLink className="w-5 h-5" aria-hidden="true" />
                              </a>
                         </Button>
                     )}

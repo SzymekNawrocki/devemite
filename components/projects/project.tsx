@@ -66,8 +66,8 @@ export function Project(props: ProjectProps) {
                 )}
                 {projectLink && (
                     <Button asChild>
-                        <a href={projectLink} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="w-4 h-4" /> 
+                        <a href={projectLink} target="_blank" rel="noopener noreferrer" aria-label={`Live demo — ${title}`}>
+                            <ExternalLink className="w-4 h-4" aria-hidden="true" />
                         </a>
                     </Button>
                 )}
