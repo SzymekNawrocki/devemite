@@ -37,11 +37,12 @@ export default function LanguageSwitcher({ scrolled }: { scrolled?: boolean }) {
       onValueChange={handleLanguageChange}
       disabled={isPending}
     >
-      <SelectTrigger 
+      <SelectTrigger
+        aria-label="Select language"
         className={`w-[140px] h-10 gap-2 backdrop-blur-md transition-all duration-300 focus:ring-0 focus:ring-offset-0 ${
           scrolled
             ? 'bg-background/80 text-foreground border-border hover:bg-accent hover:text-accent-foreground'
-            : 'bg-white/10 text-white border-white/20 hover:bg-white/20' 
+            : 'bg-white/10 text-white border-white/20 hover:bg-white/20'
         }`}
       >
         <div className="flex items-center gap-2.5">

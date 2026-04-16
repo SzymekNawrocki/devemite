@@ -69,7 +69,7 @@ export default async function FrontendLayout({
               disableTransitionOnChange
             >
               <Header data={headerData.data} siteSettings={siteSettingsData.data} />
-              {children}
+              <main>{children}</main>
               <Footer data={footerData.data} />
             </ThemeProvider>
           </NextIntlClientProvider>

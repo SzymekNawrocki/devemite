@@ -29,7 +29,7 @@ export function Footer({ data }: { data: FOOTER_QUERYResult }) {
           {data?.privacyPolicyLink && (
             <Link
               href={data.privacyPolicyLink.href as "/"}
-              className="text-sm font-medium text-primary/60 hover:text-primary transition-colors tracking-wide"
+              className="text-sm font-medium text-primary/80 hover:text-primary transition-colors tracking-wide"
             >
               {data.privacyPolicyLink.label}
             </Link>
@@ -65,7 +65,7 @@ export function Footer({ data }: { data: FOOTER_QUERYResult }) {
 
       <Separator className="opacity-30" />
 
-      <div className="py-6 text-primary/70 text-sm text-center">
+      <div className="py-6 text-primary/80 text-sm text-center">
         {data?.copyrightText 
           ? data.copyrightText.replace("{year}", new Date().getFullYear().toString())
           : `&copy; ${new Date().getFullYear()} Szymon Nawrocki - Devemite`}
