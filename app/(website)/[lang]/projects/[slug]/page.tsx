@@ -3,6 +3,8 @@ import { client, sanityFetch } from "@/sanity/lib/client";
 import { HOME_TITLE_QUERY, PROJECT_QUERY, PROJECTS_SLUGS_QUERY, HEADER_QUERY, PROJECTS_PAGE_QUERY } from "@/sanity/lib/queries";
 import { PROJECTS_SLUGS_QUERYResult } from "@/sanity/types";
 import { buildAlternates } from "@/lib/hreflang";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbListSchema, siteUrl } from "@/lib/json-ld";
 import { Project } from "@/components/projects/project";
 import { routing } from "@/i18n/routing";
 import { Metadata } from "next";
@@ -106,11 +108,20 @@ export default async function Page({ params }: RouteProps) {
     notFound();
   }
 
+  const homeLabel = homeData?.title || "Home";
+
   return (
     <section className="pt-28 md:pt-40">
+      <JsonLd
+        schema={breadcrumbListSchema([
+          { label: homeLabel, url: siteUrl(resolvedParams.lang) },
+          { label: projectsLabel, url: siteUrl(resolvedParams.lang, "/projects") },
+          { label: project.title, url: siteUrl(resolvedParams.lang, `/projects/${resolvedParams.slug}`) },
+        ])}
+      />
        <Container>
          <Breadcrumbs
-            homeLabel={homeData?.title || "Home"}
+            homeLabel={homeLabel}
             items={[
                { label: projectsLabel, href: "/projects" },
                { label: project?.title }

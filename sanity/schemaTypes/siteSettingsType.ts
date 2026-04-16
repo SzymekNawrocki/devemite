@@ -65,6 +65,23 @@ export const siteSettingsType = defineType({
       type: "string",
       description: "Default meta description for the site (used as layout-level fallback)",
     }),
+    defineField({
+      name: "person",
+      title: "Person (JSON-LD)",
+      type: "object",
+      description: "Structured data about you for Google's Person rich result",
+      fields: [
+        defineField({ name: "name", title: "Full Name", type: "string" }),
+        defineField({ name: "jobTitle", title: "Job Title", type: "string" }),
+        defineField({
+          name: "sameAs",
+          title: "Social / Profile URLs",
+          description: "e.g. https://github.com/you, https://linkedin.com/in/you",
+          type: "array",
+          of: [{ type: "url" }],
+        }),
+      ],
+    }),
   ],
   preview: {
     select: {

@@ -6,6 +6,8 @@ import { CONTACT_SETTINGS_QUERY, HOME_TITLE_QUERY, HEADER_QUERY } from "@/sanity
 import { CONTACT_SETTINGS_QUERYResult, HOME_TITLE_QUERYResult, HEADER_QUERYResult } from "@/sanity/types";
 import { Metadata } from "next";
 import { buildAlternates } from "@/lib/hreflang";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbListSchema, siteUrl } from "@/lib/json-ld";
 
 type Props = {
   params: Promise<{ lang: string }>;
@@ -43,11 +45,19 @@ export default async function Page({ params }: Props) {
   const contactLabel =
     headerData?.navigation?.find((n) => n.href === "/contact")?.label ?? "Contact";
 
+  const homeLabel = homeData?.title ?? "Home";
+
   return (
     <section className="pt-28 md:pt-40 pb-24 min-h-screen">
+      <JsonLd
+        schema={breadcrumbListSchema([
+          { label: homeLabel, url: siteUrl(lang) },
+          { label: contactLabel, url: siteUrl(lang, "/contact") },
+        ])}
+      />
       <Container>
         <Breadcrumbs
-          homeLabel={homeData?.title ?? "Home"}
+          homeLabel={homeLabel}
           items={[{ label: contactLabel, href: "/contact" }]}
           className="mb-12"
         />

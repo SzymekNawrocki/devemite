@@ -1555,6 +1555,33 @@
           "type": "string"
         },
         "optional": true
+      },
+      "person": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "name": {
+              "type": "objectAttribute",
+              "value": { "type": "string" },
+              "optional": true
+            },
+            "jobTitle": {
+              "type": "objectAttribute",
+              "value": { "type": "string" },
+              "optional": true
+            },
+            "sameAs": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "array",
+                "of": { "type": "string" }
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
       }
     }
   },

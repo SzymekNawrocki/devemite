@@ -8,6 +8,8 @@ import { routing } from "@/i18n/routing";
 import { Container } from "@/components/ui/container";
 import { Metadata } from "next";
 import { urlFor } from "@/sanity/lib/image";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { blogPostingSchema, breadcrumbListSchema, siteUrl } from "@/lib/json-ld";
 
 type RouteParams = {
   slug: string;
@@ -108,15 +110,35 @@ export default async function Page({
     notFound();
   }
 
+  const homeLabel = homeData?.title || "Home";
+  const blogLabel = pageData?.title || "Blog";
+
   return (
     <section className="pt-28 md:pt-40 pb-12">
+      <JsonLd
+        schema={blogPostingSchema({
+          title: post.title,
+          description: post.seo?.description || undefined,
+          publishedAt: post.publishedAt,
+          updatedAt: post._updatedAt,
+          imageUrl: post.mainImage ? urlFor(post.mainImage).width(1200).height(630).url() : null,
+          url: siteUrl(lang, `/posts/${slug}`),
+        })}
+      />
+      <JsonLd
+        schema={breadcrumbListSchema([
+          { label: homeLabel, url: siteUrl(lang) },
+          { label: blogLabel, url: siteUrl(lang, "/posts") },
+          { label: post.title, url: siteUrl(lang, `/posts/${slug}`) },
+        ])}
+      />
       <Container>
-        <Breadcrumbs 
-          homeLabel={homeData?.title || "Home"}
+        <Breadcrumbs
+          homeLabel={homeLabel}
           items={[
-            { label: pageData?.title || "Blog", href: "/posts" },
+            { label: blogLabel, href: "/posts" },
             { label: post?.title }
-          ]} 
+          ]}
           className="mb-8"
         />
         <Post {...post} lang={lang} labels={pageData} />

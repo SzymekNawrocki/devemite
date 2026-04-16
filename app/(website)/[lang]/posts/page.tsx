@@ -12,6 +12,8 @@ import { urlFor } from "@/sanity/lib/image";
 
 import { POSTS_QUERYResult, POSTS_PAGE_QUERYResult, HOME_TITLE_QUERYResult } from "@/sanity/types";
 import { buildAlternates } from "@/lib/hreflang";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbListSchema, siteUrl } from "@/lib/json-ld";
 
 const PAGE_SIZE = 12;
 
@@ -74,12 +76,21 @@ export default async function Page({ params, searchParams }: Props) {
   const hasPrev = currentPage > 1;
   const hasNext = currentPage < totalPages;
 
+  const homeLabel = homeData?.title || "Home";
+  const blogLabel = pageData?.title || "Blog";
+
   return (
     <section className="pt-28 md:pt-40 pb-24">
+      <JsonLd
+        schema={breadcrumbListSchema([
+          { label: homeLabel, url: siteUrl(lang) },
+          { label: blogLabel, url: siteUrl(lang, "/posts") },
+        ])}
+      />
       <Container>
         <Breadcrumbs
-          homeLabel={homeData?.title || "Home"}
-          items={[{ label: pageData?.title || "Blog", href: "/posts" }]}
+          homeLabel={homeLabel}
+          items={[{ label: blogLabel, href: "/posts" }]}
           className="mb-4"
         />
         <header className="mb-16">

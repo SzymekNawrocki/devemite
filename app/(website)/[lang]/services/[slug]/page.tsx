@@ -13,6 +13,8 @@ import { Container } from "@/components/ui/container";
 import { Globe, Code, Mail, Server, Cpu, Layers, Zap, LineChart, Database, Monitor, type LucideIcon } from "lucide-react";
 import { Metadata } from "next";
 import { buildAlternates } from "@/lib/hreflang";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbListSchema, siteUrl } from "@/lib/json-ld";
 
 const iconsMap: Record<string, LucideIcon> = {
   Globe,
@@ -99,15 +101,24 @@ export default async function Page({
 
   const Icon = service?.icon && iconsMap[service.icon] ? iconsMap[service.icon] : Globe;
 
+  const homeLabel = homeData?.title || "Home";
+
   return (
     <section className="pt-28 md:pt-40">
+      <JsonLd
+        schema={breadcrumbListSchema([
+          { label: homeLabel, url: siteUrl(lang) },
+          { label: servicesLabel, url: siteUrl(lang, "/services") },
+          { label: service.title, url: siteUrl(lang, `/services/${slug}`) },
+        ])}
+      />
       <Container className="space-y-10">
         <Breadcrumbs
-          homeLabel={homeData?.title || "Home"}
+          homeLabel={homeLabel}
           items={[
             { label: servicesLabel, href: "/services" },
             { label: service?.title }
-          ]} 
+          ]}
         />
 
         <div className="flex flex-col md:flex-row md:items-center gap-6">

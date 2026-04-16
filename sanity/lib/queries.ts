@@ -116,6 +116,7 @@ export const POSTS_SLUGS_QUERY = defineQuery(`
 export const POST_QUERY = defineQuery(`
   *[_type == "post" && slug.current == $slug && language == $lang][0]{
     _id,
+    _updatedAt,
     title,
     body,
     mainImage,
@@ -274,6 +275,16 @@ export const HOME_TITLE_QUERY = defineQuery(`
       *[_type == "translation.metadata" && references(^.homePage._ref)][0].translations[_key == $lang][0].value->title,
       homePage->title
     )
+  }
+`);
+
+export const PERSON_SCHEMA_QUERY = defineQuery(`
+  *[_id == "siteSettings"][0]{
+    "person": {
+      "name": person.name,
+      "jobTitle": person.jobTitle,
+      "sameAs": person.sameAs
+    }
   }
 `);
 

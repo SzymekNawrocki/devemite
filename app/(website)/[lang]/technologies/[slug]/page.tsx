@@ -8,6 +8,8 @@ import {
 } from "@/sanity/lib/queries";
 import { Metadata } from "next";
 import { buildAlternates } from "@/lib/hreflang";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbListSchema, siteUrl } from "@/lib/json-ld";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { routing } from "@/i18n/routing";
 import { PageBuilder } from "@/components/sanity/page-builder";
@@ -86,15 +88,24 @@ export default async function Page({
 
   if (!tech) notFound();
 
+  const homeLabel = homeData?.title || "Home";
+
   return (
     <section className="py-22 mt-12">
+      <JsonLd
+        schema={breadcrumbListSchema([
+          { label: homeLabel, url: siteUrl(lang) },
+          { label: technologiesLabel, url: siteUrl(lang, "/technologies") },
+          { label: tech.name, url: siteUrl(lang, `/technologies/${slug}`) },
+        ])}
+      />
       <Container className="space-y-6">
         <Breadcrumbs
-          homeLabel={homeData?.title || "Home"}
+          homeLabel={homeLabel}
           items={[
             { label: technologiesLabel, href: "/technologies" },
             { label: tech?.name }
-          ]} 
+          ]}
           className="mb-8"
         />
         <h1 className="font-bold text-4xl">{tech.name}</h1>

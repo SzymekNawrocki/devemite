@@ -267,6 +267,11 @@ export type SiteSettings = {
   breadcrumbHomeLabel?: string;
   seoTitle?: string;
   seoDescription?: string;
+  person?: {
+    name?: string;
+    jobTitle?: string;
+    sameAs?: Array<string | null>;
+  };
 };
 
 export type SplitImage = {
@@ -1081,9 +1086,10 @@ export type POSTS_SLUGS_QUERYResult = Array<{
   language: string | null;
 }>;
 // Variable: POST_QUERY
-// Query: *[_type == "post" && slug.current == $slug && language == $lang][0]{    _id,    title,    body,    mainImage,    publishedAt,    "categories": coalesce(      categories[]->{_id, slug, title},      []    ),    author->{name, image},    relatedPosts[]{      _key,      ...@->{        _id,        title,        slug,        language      }    },    "seo": {      "title": coalesce(seo.title, title, ""),      "description": coalesce(seo.description, ""),      "seoImage": seo.seoImage    }  }
+// Query: *[_type == "post" && slug.current == $slug && language == $lang][0]{    _id,    _updatedAt,    title,    body,    mainImage,    publishedAt,    "categories": coalesce(      categories[]->{_id, slug, title},      []    ),    author->{name, image},    relatedPosts[]{      _key,      ...@->{        _id,        title,        slug,        language      }    },    "seo": {      "title": coalesce(seo.title, title, ""),      "description": coalesce(seo.description, ""),      "seoImage": seo.seoImage    }  }
 export type POST_QUERYResult = {
   _id: string;
+  _updatedAt: string;
   title: string;
   body: Array<{
     children?: Array<{
@@ -5815,6 +5821,16 @@ export type FOOTER_QUERYResult = {
   }> | null;
 } | null;
 
+// Variable: PERSON_SCHEMA_QUERY
+// Query: *[_id == "siteSettings"][0]{    "person": {      "name": person.name,      "jobTitle": person.jobTitle,      "sameAs": person.sameAs    }  }
+export type PERSON_SCHEMA_QUERYResult = {
+  person: {
+    name: string | null;
+    jobTitle: string | null;
+    sameAs: Array<string> | null;
+  };
+} | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -5823,7 +5839,8 @@ declare module "@sanity/client" {
     "\n  count(*[_type == \"post\" && defined(slug.current) && language == $lang])\n": POSTS_COUNT_QUERYResult;
     "\n  *[_type == \"post\" && defined(slug.current) && language == $lang]\n  | order(publishedAt desc)[$offset...$limit]{\n    _id,\n    title,\n    slug,\n    excerpt,\n    body,\n    mainImage,\n    publishedAt,\n    \"categories\": coalesce(\n      categories[]->{_id, slug, title},\n      []\n    ),\n    author->{name, image},\n    relatedPosts[]{\n      _key,\n      ...@->{\n        _id,\n        title,\n        slug,\n        language\n      }\n    },\n    \"seo\": {\n      \"title\": coalesce(seo.title, title, \"\"),\n      \"description\": coalesce(seo.description, \"\"),\n      \"seoImage\": seo.seoImage\n    }\n  }\n": POSTS_QUERYResult;
     "\n  *[_type == \"post\" && defined(slug.current) && language == $lang]{\n    \"slug\": slug.current,\n    language\n  }\n": POSTS_SLUGS_QUERYResult;
-    "\n  *[_type == \"post\" && slug.current == $slug && language == $lang][0]{\n    _id,\n    title,\n    body,\n    mainImage,\n    publishedAt,\n    \"categories\": coalesce(\n      categories[]->{_id, slug, title},\n      []\n    ),\n    author->{name, image},\n    relatedPosts[]{\n      _key,\n      ...@->{\n        _id,\n        title,\n        slug,\n        language\n      }\n    },\n    \"seo\": {\n      \"title\": coalesce(seo.title, title, \"\"),\n      \"description\": coalesce(seo.description, \"\"),\n      \"seoImage\": seo.seoImage\n    }\n  }\n": POST_QUERYResult;
+    "\n  *[_type == \"post\" && slug.current == $slug && language == $lang][0]{\n    _id,\n    _updatedAt,\n    title,\n    body,\n    mainImage,\n    publishedAt,\n    \"categories\": coalesce(\n      categories[]->{_id, slug, title},\n      []\n    ),\n    author->{name, image},\n    relatedPosts[]{\n      _key,\n      ...@->{\n        _id,\n        title,\n        slug,\n        language\n      }\n    },\n    \"seo\": {\n      \"title\": coalesce(seo.title, title, \"\"),\n      \"description\": coalesce(seo.description, \"\"),\n      \"seoImage\": seo.seoImage\n    }\n  }\n": POST_QUERYResult;
+    "\n  *[_id == \"siteSettings\"][0]{\n    \"person\": {\n      \"name\": person.name,\n      \"jobTitle\": person.jobTitle,\n      \"sameAs\": person.sameAs\n    }\n  }\n": PERSON_SCHEMA_QUERYResult;
     "\n  *[_type == \"project\" && defined(slug.current) && language == $lang]\n  | order(_createdAt desc){\n    _id,\n    title,\n    slug,\n    description,\n    mainImage,\n    projectLink,\n    githubLink,\n    \n  \"technologies\": coalesce(\n    technologies[]->{\n      \"tech\": coalesce(\n        *[_type == \"translation.metadata\" && references(^._id)][0].translations[_key == $lang][0].value->,\n        @\n      ){\n        \n  _id,\n  slug,\n  name,\n  icon,\n  language\n\n      }\n    }.tech,\n    []\n  )\n,\n    language\n  }\n": PROJECTS_QUERYResult;
     "\n  *[_type == \"project\" && defined(slug.current) && language == $lang]{\n    \"slug\": slug.current,\n    language\n  }\n": PROJECTS_SLUGS_QUERYResult;
     "\n  *[_type == \"project\" && slug.current == $slug && language == $lang][0]{\n    _id,\n    title,\n    slug,\n    description,\n    body,\n    mainImage,\n    projectLink,\n    githubLink,\n    \n  \"technologies\": coalesce(\n    technologies[]->{\n      \"tech\": coalesce(\n        *[_type == \"translation.metadata\" && references(^._id)][0].translations[_key == $lang][0].value->,\n        @\n      ){\n        \n  _id,\n  slug,\n  name,\n  icon,\n  language\n\n      }\n    }.tech,\n    []\n  )\n,\n    \"seo\": {\n      \"title\": coalesce(seo.title, title, \"\"),\n      \"description\": coalesce(seo.description, description, \"\"),\n      \"seoImage\": seo.seoImage\n    }\n  }\n": PROJECT_QUERYResult;

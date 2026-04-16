@@ -7,6 +7,8 @@ import { Metadata } from "next";
 import { PROJECTS_PAGE_QUERYResult } from "@/sanity/types";
 import { urlFor } from "@/sanity/lib/image";
 import { buildAlternates } from "@/lib/hreflang";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbListSchema, siteUrl } from "@/lib/json-ld";
 
 export async function generateMetadata({ 
   params 
@@ -60,13 +62,21 @@ export default async function Page({
 
   const projectsLabel = pageData?.title || headerData?.navigation?.find((n) => n.href === "/projects")?.label || "Projects";
 
+  const homeLabel = homeData?.title || "Home";
+
   return (
     <main className="min-h-screen pt-28 md:pt-40">
+      <JsonLd
+        schema={breadcrumbListSchema([
+          { label: homeLabel, url: siteUrl(lang) },
+          { label: projectsLabel, url: siteUrl(lang, "/projects") },
+        ])}
+      />
        <Container>
-         <Breadcrumbs 
-            homeLabel={homeData?.title || "Home"}
-            items={[{ label: projectsLabel, href: "/projects" }]} 
-            className="mb-8" 
+         <Breadcrumbs
+            homeLabel={homeLabel}
+            items={[{ label: projectsLabel, href: "/projects" }]}
+            className="mb-8"
          />
        </Container>
        <ProjectsBlock 

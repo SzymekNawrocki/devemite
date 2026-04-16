@@ -21,6 +21,8 @@ import {
 } from '@/sanity/lib/queries';
 import { MoveLeft } from "lucide-react";
 import { TECHNOLOGIES_PAGE_QUERY } from "@/sanity/lib/queries";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbListSchema, siteUrl } from "@/lib/json-ld";
 
 export async function generateMetadata({
   params,
@@ -79,12 +81,20 @@ export default async function Page({
   const emptyStateDescription = pageData?.emptyStateDescription || "Come back later to see more updates.";
   const backToHomeLabel = pageData?.backToHomeLabel || "Return home";
 
+  const homeLabel = homeData?.title || "Home";
+
   return (
     <section className="pt-28 md:pt-40 pb-24 min-h-screen">
+      <JsonLd
+        schema={breadcrumbListSchema([
+          { label: homeLabel, url: siteUrl(lang) },
+          { label: technologiesLabel, url: siteUrl(lang, "/technologies") },
+        ])}
+      />
       <Container>
         <Breadcrumbs
-          homeLabel={homeData?.title || "Home"}
-          items={[{ label: technologiesLabel, href: "/technologies" }]} 
+          homeLabel={homeLabel}
+          items={[{ label: technologiesLabel, href: "/technologies" }]}
           className="mb-12"
         />
         

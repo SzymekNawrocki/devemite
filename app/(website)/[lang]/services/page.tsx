@@ -10,6 +10,8 @@ import { Metadata } from "next";
 import { type LucideIcon } from "lucide-react";
 import { SERVICES_QUERYResult, HOME_TITLE_QUERYResult, HEADER_QUERYResult, SERVICES_PAGE_QUERYResult } from "@/sanity/types";
 import { buildAlternates } from "@/lib/hreflang";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbListSchema, siteUrl } from "@/lib/json-ld";
 
 const iconsMap: Record<string, LucideIcon> = {
   Globe,
@@ -63,12 +65,20 @@ export default async function Page({
 
   const backToHomeLabel = pageData?.backToHomeLabel || "Back to home";
 
+  const homeLabel = homeData?.title || "Home";
+
   return (
     <section className="pt-28 md:pt-40 pb-24">
+      <JsonLd
+        schema={breadcrumbListSchema([
+          { label: homeLabel, url: siteUrl(lang) },
+          { label: servicesLabel, url: siteUrl(lang, "/services") },
+        ])}
+      />
       <Container className="space-y-12">
         <div className="space-y-4">
           <Breadcrumbs
-            homeLabel={homeData?.title || "Home"}
+            homeLabel={homeLabel}
             items={[{ label: servicesLabel, href: "/services" }]}
           />
           <SectionTitle text={servicesLabel} />
