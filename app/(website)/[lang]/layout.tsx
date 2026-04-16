@@ -3,7 +3,6 @@ import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { DisableDraftMode } from "@/components/sanity/disable-draft-mode";
 import { Header } from "@/components/layout/header";
-import dynamic from "next/dynamic";
 import { Metadata } from "next";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { NextIntlClientProvider } from "next-intl";
@@ -13,11 +12,7 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { HEADER_QUERY, FOOTER_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 import { JetBrains_Mono } from "next/font/google";
 import { buildAlternates } from "@/lib/hreflang";
-
-const SanityLive = dynamic(
-  () => import("@/sanity/lib/live").then((m) => m.SanityLive),
-  { ssr: false }
-);
+import { SanityLive } from "@/components/sanity/sanity-live-client";
 
 const jbMono = JetBrains_Mono({
   subsets: ["latin", "latin-ext"],
