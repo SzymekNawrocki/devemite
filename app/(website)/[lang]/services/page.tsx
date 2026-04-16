@@ -6,9 +6,10 @@ import { SERVICES_QUERY, HOME_TITLE_QUERY, HEADER_QUERY, SERVICES_PAGE_QUERY } f
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SectionTitle } from "@/components/ui/section-title";
 import { Globe, Code, Mail, Server, Cpu, ArrowRight, Layers, Zap, LineChart, Database, Monitor, MoveLeft } from "lucide-react";
-
+import { Metadata } from "next";
 import { type LucideIcon } from "lucide-react";
 import { SERVICES_QUERYResult, HOME_TITLE_QUERYResult, HEADER_QUERYResult, SERVICES_PAGE_QUERYResult } from "@/sanity/types";
+import { buildAlternates } from "@/lib/hreflang";
 
 const iconsMap: Record<string, LucideIcon> = {
   Globe,
@@ -22,6 +23,24 @@ const iconsMap: Record<string, LucideIcon> = {
   Database,
   Monitor,
 };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const pageData: SERVICES_PAGE_QUERYResult = await client.fetch(SERVICES_PAGE_QUERY, { lang });
+  const canonicalUrl = `/${lang}/services`;
+  return {
+    title: pageData?.seo?.title || pageData?.title,
+    description: pageData?.seo?.description,
+    alternates: {
+      canonical: canonicalUrl,
+      ...buildAlternates("/services"),
+    },
+  };
+}
 
 export default async function Page({
   params,

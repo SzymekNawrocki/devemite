@@ -22,7 +22,7 @@ export function Hero(props: HeroProps) {
      <Image
   className="absolute inset-0 w-full h-full object-cover"
 
-  src={urlFor(image).width(2000).auto('format').quality(100).url()}
+  src={urlFor(image).width(2000).auto('format').quality(80).url()}
   alt={title || ""}
   fill
   priority

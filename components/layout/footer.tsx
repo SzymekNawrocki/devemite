@@ -14,10 +14,11 @@ export function Footer({ data }: { data: FOOTER_QUERYResult }) {
           <Link href="/" className="flex items-center transition-opacity hover:opacity-90">
             {data?.logoImage && (
               <Image
-                src={urlFor(data.logoImage).url()}
+                src={urlFor(data.logoImage).width(400).quality(80).url()}
                 alt={data?.logoAlt || "Logo"}
-                width={400}
-                height={120}
+                width={200}
+                height={60}
+                sizes="(max-width: 768px) 120px, (max-width: 1024px) 160px, 200px"
                 className="w-auto h-12 md:h-16 lg:h-20 object-contain"
               />
             )}

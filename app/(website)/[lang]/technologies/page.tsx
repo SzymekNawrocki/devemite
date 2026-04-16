@@ -1,7 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { sanityFetch } from "@/sanity/lib/client";
+import { Metadata } from "next";
 import { TECHNOLOGIES_QUERYResult, TECHNOLOGIES_PAGE_QUERYResult, HOME_TITLE_QUERYResult, HEADER_QUERYResult } from "@/sanity/types";
+import { buildAlternates } from "@/lib/hreflang";
 import { Container } from "@/components/ui/container";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { SectionTitle } from "@/components/ui/section-title";
@@ -19,6 +21,28 @@ import {
 } from '@/sanity/lib/queries';
 import { MoveLeft } from "lucide-react";
 import { TECHNOLOGIES_PAGE_QUERY } from "@/sanity/lib/queries";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const pageData: TECHNOLOGIES_PAGE_QUERYResult = await sanityFetch({
+    query: TECHNOLOGIES_PAGE_QUERY,
+    params: { lang },
+    tags: [`technologiesPage:${lang}`],
+  });
+  const canonicalUrl = `/${lang}/technologies`;
+  return {
+    title: pageData?.title,
+    description: pageData?.description,
+    alternates: {
+      canonical: canonicalUrl,
+      ...buildAlternates("/technologies"),
+    },
+  };
+}
 
 export default async function Page({
   params,

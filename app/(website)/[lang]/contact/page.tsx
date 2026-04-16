@@ -5,6 +5,7 @@ import { ContactForm } from "@/components/blocks/contact-form";
 import { CONTACT_SETTINGS_QUERY, HOME_TITLE_QUERY, HEADER_QUERY } from "@/sanity/lib/queries";
 import { CONTACT_SETTINGS_QUERYResult, HOME_TITLE_QUERYResult, HEADER_QUERYResult } from "@/sanity/types";
 import { Metadata } from "next";
+import { buildAlternates } from "@/lib/hreflang";
 
 type Props = {
   params: Promise<{ lang: string }>;
@@ -18,7 +19,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: contactLabel,
-    alternates: { canonical: `/${lang}/contact` },
+    alternates: {
+      canonical: `/${lang}/contact`,
+      ...buildAlternates("/contact"),
+    },
     openGraph: { url: `/${lang}/contact` },
   };
 }

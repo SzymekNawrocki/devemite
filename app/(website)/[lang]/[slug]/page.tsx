@@ -5,6 +5,7 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { PAGE_QUERY, PAGES_SLUGS_QUERY } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import { client } from "@/sanity/lib/client";
+import { buildAlternates } from "@/lib/hreflang";
 
 type RouteParams = {
   slug: string;
@@ -37,6 +38,7 @@ export async function generateMetadata({ params }: RouteProps): Promise<Metadata
     description: page.seo.description,
     alternates: {
       canonical: canonicalUrl,
+      ...buildAlternates(`/${slug}`),
     },
   };
 

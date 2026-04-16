@@ -11,6 +11,8 @@ import { routing } from "@/i18n/routing";
 import { PageBuilder } from "@/components/sanity/page-builder";
 import { Container } from "@/components/ui/container";
 import { Globe, Code, Mail, Server, Cpu, Layers, Zap, LineChart, Database, Monitor, type LucideIcon } from "lucide-react";
+import { Metadata } from "next";
+import { buildAlternates } from "@/lib/hreflang";
 
 const iconsMap: Record<string, LucideIcon> = {
   Globe,
@@ -24,6 +26,32 @@ const iconsMap: Record<string, LucideIcon> = {
   Database,
   Monitor,
 };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string; lang: string }>;
+}): Promise<Metadata> {
+  const { slug, lang } = await params;
+  const service = await sanityFetch({
+    query: SERVICE_QUERY,
+    params: { slug, lang },
+    revalidate: 3600,
+    tags: [`service:${slug}`],
+  });
+
+  if (!service) return {};
+
+  const canonicalUrl = `/${lang}/services/${slug}`;
+  return {
+    title: service.title,
+    description: service.description,
+    alternates: {
+      canonical: canonicalUrl,
+      ...buildAlternates(`/services/${slug}`),
+    },
+  };
+}
 
 export async function generateStaticParams() {
   const allParams = await Promise.all(

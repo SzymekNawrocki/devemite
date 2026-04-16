@@ -6,6 +6,8 @@ import {
   HOME_TITLE_QUERY,
   HEADER_QUERY,
 } from "@/sanity/lib/queries";
+import { Metadata } from "next";
+import { buildAlternates } from "@/lib/hreflang";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { routing } from "@/i18n/routing";
 import { PageBuilder } from "@/components/sanity/page-builder";
@@ -13,6 +15,32 @@ import { Container } from "@/components/ui/container";
 import { TechnologyBody } from "@/components/technology/technology-body";
 
 export const dynamicParams = true;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string; lang: string }>;
+}): Promise<Metadata> {
+  const { slug, lang } = await params;
+  const tech = await sanityFetch({
+    query: TECHNOLOGY_QUERY,
+    params: { slug, lang },
+    revalidate: 3600,
+    tags: [`technology:${lang}:${slug}`],
+  });
+
+  if (!tech) return {};
+
+  const canonicalUrl = `/${lang}/technologies/${slug}`;
+  return {
+    title: tech.name,
+    description: tech.description,
+    alternates: {
+      canonical: canonicalUrl,
+      ...buildAlternates(`/technologies/${slug}`),
+    },
+  };
+}
 
 export async function generateStaticParams() {
   const allParams = await Promise.all(

@@ -11,6 +11,7 @@ import { Metadata } from "next";
 import { urlFor } from "@/sanity/lib/image";
 
 import { POSTS_QUERYResult, POSTS_PAGE_QUERYResult, HOME_TITLE_QUERYResult } from "@/sanity/types";
+import { buildAlternates } from "@/lib/hreflang";
 
 const PAGE_SIZE = 12;
 
@@ -34,6 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: pageData.seo?.description,
     alternates: {
       canonical: canonicalUrl,
+      ...buildAlternates("/posts"),
     },
   };
 

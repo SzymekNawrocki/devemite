@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { client, sanityFetch } from "@/sanity/lib/client";
 import { HOME_TITLE_QUERY, PROJECT_QUERY, PROJECTS_SLUGS_QUERY, HEADER_QUERY, PROJECTS_PAGE_QUERY } from "@/sanity/lib/queries";
 import { PROJECTS_SLUGS_QUERYResult } from "@/sanity/types";
+import { buildAlternates } from "@/lib/hreflang";
 import { Project } from "@/components/projects/project";
 import { routing } from "@/i18n/routing";
 import { Metadata } from "next";
@@ -42,6 +43,7 @@ export async function generateMetadata({ params }: RouteProps): Promise<Metadata
     description: project.seo?.description || project.description,
     alternates: {
       canonical: canonicalUrl,
+      ...buildAlternates(`/projects/${slug}`),
     },
   };
 

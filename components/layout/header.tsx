@@ -47,12 +47,12 @@ export function Header({ data, siteSettings }: { data: HEADER_QUERYResult; siteS
         <Link href="/" className="flex items-center transition-opacity hover:opacity-90">
           {data?.logoImage && (
             <Image
-              src={urlFor(data.logoImage).url()}
+              src={urlFor(data.logoImage).width(480).quality(80).url()}
               alt={data?.logoAlt || "Logo"}
-              width={600} // Zwiększone, żeby Next.js pobrał gęstszy plik
-              height={200}
+              width={240}
+              height={80}
               priority
-              // Zmienione h-10 na h-16 (mobile) i h-14 na h-24 (desktop)
+              sizes="(max-width: 768px) 160px, 240px"
               className="w-auto h-16 md:h-24 object-contain"
             />
           )}

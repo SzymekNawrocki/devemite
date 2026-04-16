@@ -12,6 +12,7 @@ import { Footer } from "@/components/layout/footer";
 import { sanityFetch } from "@/sanity/lib/live";
 import { HEADER_QUERY, FOOTER_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 import { JetBrains_Mono } from "next/font/google";
+import { buildAlternates } from "@/lib/hreflang";
 
 const jbMono = JetBrains_Mono({
   subsets: ["latin", "latin-ext"],
@@ -33,6 +34,10 @@ export async function generateMetadata({
     manifest: "/manifest.json",
     icons: {
       apple: "/apple-touch-icon.png",
+    },
+    alternates: {
+      canonical: `/${lang}`,
+      ...buildAlternates("/"),
     },
   };
 }

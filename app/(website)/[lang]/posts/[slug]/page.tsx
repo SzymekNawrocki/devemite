@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { client, sanityFetch } from "@/sanity/lib/client";
 import { POST_QUERY, POSTS_SLUGS_QUERY, POSTS_PAGE_QUERY, HOME_TITLE_QUERY } from "@/sanity/lib/queries";
+import { buildAlternates } from "@/lib/hreflang";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { Post } from "@/components/blog/post";
 import { routing } from "@/i18n/routing";
@@ -37,6 +38,7 @@ export async function generateMetadata({ params }: RouteProps): Promise<Metadata
     description: post.seo?.description,
     alternates: {
       canonical: canonicalUrl,
+      ...buildAlternates(`/posts/${slug}`),
     },
   };
 

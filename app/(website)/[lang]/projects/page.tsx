@@ -6,6 +6,7 @@ import { HOME_TITLE_QUERY, PROJECTS_QUERY, HEADER_QUERY, PROJECTS_PAGE_QUERY } f
 import { Metadata } from "next";
 import { PROJECTS_PAGE_QUERYResult } from "@/sanity/types";
 import { urlFor } from "@/sanity/lib/image";
+import { buildAlternates } from "@/lib/hreflang";
 
 export async function generateMetadata({ 
   params 
@@ -24,6 +25,7 @@ export async function generateMetadata({
     description: pageData.seo?.description || pageData.description,
     alternates: {
       canonical: canonicalUrl,
+      ...buildAlternates("/projects"),
     },
   };
 
