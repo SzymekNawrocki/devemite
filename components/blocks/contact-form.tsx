@@ -2,13 +2,12 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { submitContactForm } from '@/app/actions/contact'
-import { cn } from '@/lib/utils'
 import { contactSchema, type ContactFormData } from '@/lib/validation/contact'
 
 interface ContactFormProps {
@@ -43,7 +42,7 @@ export function ContactForm({ settings }: ContactFormProps) {
 		errorMessage = 'Something went wrong. Please try again.',
 	} = settings || {}
 
-	const websiteRef = useRef<HTMLInputElement>(null)
+	const [honeypot, setHoneypot] = useState('')
 
 	const form = useForm<ContactFormData>({
 		resolver: zodResolver(contactSchema),
@@ -54,21 +53,21 @@ export function ContactForm({ settings }: ContactFormProps) {
 		},
 	})
 
-	async function onSubmit(data: ContactFormData) {
+	const onSubmit = useCallback(async (data: ContactFormData) => {
 		setStatus({ type: null, message: null })
 
 		try {
-			const result = await submitContactForm({ ...data, website: websiteRef.current?.value ?? '' })
+			const result = await submitContactForm({ ...data, website: honeypot })
 			if (result.success) {
 				setStatus({ type: 'success', message: successMessage })
 				form.reset()
 			} else {
 				setStatus({ type: 'error', message: result.message || errorMessage })
 			}
-		} catch (error) {
+		} catch {
 			setStatus({ type: 'error', message: errorMessage })
 		}
-	}
+	}, [honeypot, successMessage, errorMessage, form])
 
 	return (
 		<Card className='w-full'>
@@ -134,12 +133,13 @@ export function ContactForm({ settings }: ContactFormProps) {
 					<div className='absolute left-[-9999px] top-[-9999px] w-px h-px overflow-hidden' aria-hidden='true'>
 						<label htmlFor='website'>Website</label>
 						<input
-							ref={websiteRef}
 							id='website'
 							name='website'
 							type='text'
 							tabIndex={-1}
 							autoComplete='off'
+							value={honeypot}
+							onChange={(e) => setHoneypot(e.target.value)}
 						/>
 					</div>
 					<Button type='submit' className='w-full h-12 text-base font-bold' disabled={form.formState.isSubmitting}>

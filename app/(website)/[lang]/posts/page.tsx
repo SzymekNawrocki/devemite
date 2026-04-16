@@ -10,7 +10,7 @@ import { Container } from "@/components/ui/container";
 import { Metadata } from "next";
 import { urlFor } from "@/sanity/lib/image";
 
-import { POSTS_QUERYResult, POSTS_PAGE_QUERYResult } from "@/sanity/types";
+import { POSTS_QUERYResult, POSTS_PAGE_QUERYResult, HOME_TITLE_QUERYResult } from "@/sanity/types";
 
 const PAGE_SIZE = 12;
 
@@ -60,7 +60,7 @@ export default async function Page({ params, searchParams }: Props) {
   const currentPage = Math.max(1, parseInt(page ?? "1", 10));
   const offset = (currentPage - 1) * PAGE_SIZE;
 
-  const [posts, pageData, homeData, totalCount]: [POSTS_QUERYResult, POSTS_PAGE_QUERYResult, any, number] =
+  const [posts, pageData, homeData, totalCount]: [POSTS_QUERYResult, POSTS_PAGE_QUERYResult, HOME_TITLE_QUERYResult, number] =
     await Promise.all([
       client.fetch(POSTS_QUERY, { lang, limit: PAGE_SIZE, offset }),
       client.fetch(POSTS_PAGE_QUERY, { lang }),

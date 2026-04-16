@@ -3,16 +3,13 @@ import { urlFor } from "@/sanity/lib/image";
 import { PortableText } from "next-sanity";
 import { components } from "@/sanity/components/portableTextComponents";
 import { Container } from "../ui/container";
-import { cn } from "@/lib/utils";
 import { SectionTitle } from "../ui/section-title";
+import { PAGE_QUERYResult } from "@/sanity/types";
 
-interface AboutMeProps {
-  _type: "aboutMe";
-  _key: string;
-  title?: string;
-  image: any;
-  content: any;
-}
+type AboutMeProps = Extract<
+  NonNullable<NonNullable<PAGE_QUERYResult>["content"]>[number],
+  { _type: "aboutMe" }
+>;
 
 export function AboutMe({ title, image, content }: AboutMeProps) {
   if (!image || !content) return null;

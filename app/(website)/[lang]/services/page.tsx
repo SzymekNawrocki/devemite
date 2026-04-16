@@ -4,7 +4,6 @@ import { Container } from "@/components/ui/container";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { SERVICES_QUERY, HOME_TITLE_QUERY, HEADER_QUERY, SERVICES_PAGE_QUERY } from "@/sanity/lib/queries";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { SectionTitle } from "@/components/ui/section-title";
 import { Globe, Code, Mail, Server, Cpu, ArrowRight, Layers, Zap, LineChart, Database, Monitor, MoveLeft } from "lucide-react";
 

@@ -1,11 +1,14 @@
-import { POST_QUERYResult } from '@/sanity/types'
+type Category = {
+  _id: string;
+  title: string;
+};
 
 type CategoriesProps = {
-  categories: NonNullable<POST_QUERYResult>['categories']
+  categories: Category[];
 }
 
 export function Categories({ categories }: CategoriesProps) {
-  return categories.map((category : any) => (
+  return categories.map((category) => (
     <span
       key={category._id}
       className="bg-secondary px-2 py-1 rounded-full font-semibold text-secondary-foreground text-xs"

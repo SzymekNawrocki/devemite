@@ -81,7 +81,8 @@ export async function GET(request: Request) {
 
           {imageUrl && (
             <div tw="flex w-[500px] h-[630px] overflow-hidden">
-              <img
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
                 src={imageUrl}
                 alt=""
                 tw="w-full h-full object-cover"
