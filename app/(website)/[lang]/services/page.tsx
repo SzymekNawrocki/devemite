@@ -40,9 +40,9 @@ export default async function Page({
   const servicesLabel = pageData?.title ||
     headerData?.navigation?.find((n) => n.href === "/services")?.label || "Services";
 
-  const readMoreLabel = pageData?.readMoreLabel || (lang === "pl" ? "Dowiedz się więcej" : "Learn more");
+  const readMoreLabel = pageData?.readMoreLabel || "Learn more";
 
-  const backToHomeLabel = pageData?.backToHomeLabel || (lang === "pl" ? "Powrót do strony głównej" : lang === "de" ? "Zurück zur Startseite" : "Back to home");
+  const backToHomeLabel = pageData?.backToHomeLabel || "Back to home";
 
   return (
     <section className="pt-28 md:pt-40 pb-24">

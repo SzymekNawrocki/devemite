@@ -13,8 +13,8 @@ import {
 
 
 
-export function PostCard(props: POSTS_QUERYResult[0] & { lang: string; excerpt?: string | null }) {
-  const { title, mainImage, categories, slug, lang, excerpt } = props;
+export function PostCard(props: POSTS_QUERYResult[0] & { lang: string; excerpt?: string | null; noCoverImageLabel?: string | null }) {
+  const { title, mainImage, categories, slug, lang, excerpt, noCoverImageLabel } = props;
 
   return (
     <Link href={`/${lang}/posts/${slug!.current}`} className="group block h-full">
@@ -31,7 +31,7 @@ export function PostCard(props: POSTS_QUERYResult[0] & { lang: string; excerpt?:
             />
           ) : (
             <div className="w-full h-full bg-muted/30 flex items-center justify-center">
-              <span className="text-muted-foreground/50 font-medium">No cover image</span>
+              <span className="text-muted-foreground/50 font-medium">{noCoverImageLabel || "No cover image"}</span>
             </div>
           )}
           

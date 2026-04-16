@@ -3673,6 +3673,13 @@
         },
         "optional": true
       },
+      "noCoverImageLabel": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "postImageAlt": {
         "type": "objectAttribute",
         "value": {

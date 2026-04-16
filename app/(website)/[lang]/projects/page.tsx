@@ -2,7 +2,46 @@ import { ProjectsBlock } from "@/components/blocks/projects-block";
 import { client } from "@/sanity/lib/client";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { Container } from "@/components/ui/container";
-import { HOME_TITLE_QUERY, PROJECTS_QUERY, HEADER_QUERY } from "@/sanity/lib/queries";
+import { HOME_TITLE_QUERY, PROJECTS_QUERY, HEADER_QUERY, PROJECTS_PAGE_QUERY } from "@/sanity/lib/queries";
+import { Metadata } from "next";
+import { PROJECTS_PAGE_QUERYResult } from "@/sanity/types";
+import { urlFor } from "@/sanity/lib/image";
+
+export async function generateMetadata({ 
+  params 
+}: { 
+  params: Promise<{ lang: string }> 
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const pageData: PROJECTS_PAGE_QUERYResult = await client.fetch(PROJECTS_PAGE_QUERY, { lang });
+
+  if (!pageData) return {};
+
+  const canonicalUrl = `/${lang}/projects`;
+
+  const metadata: Metadata = {
+    title: pageData.seo?.title || pageData.title,
+    description: pageData.seo?.description || pageData.description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+  };
+
+  if (pageData.seo?.seoImage) {
+    metadata.openGraph = {
+      url: canonicalUrl,
+      images: [
+        {
+          url: urlFor(pageData.seo.seoImage).width(1200).height(630).url(),
+          width: 1200,
+          height: 630,
+        },
+      ],
+    };
+  }
+
+  return metadata;
+}
 
 export default async function Page({
   params,
@@ -10,13 +49,14 @@ export default async function Page({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const [projects, homeData, headerData] = await Promise.all([
+  const [projects, homeData, headerData, pageData] = await Promise.all([
     client.fetch(PROJECTS_QUERY, { lang }),
     client.fetch(HOME_TITLE_QUERY, { lang }),
     client.fetch(HEADER_QUERY, { lang }),
+    client.fetch(PROJECTS_PAGE_QUERY, { lang }),
   ]);
 
-  const projectsLabel = headerData?.navigation?.find((n) => n.href === "/projects")?.label || "Projects";
+  const projectsLabel = pageData?.title || headerData?.navigation?.find((n) => n.href === "/projects")?.label || "Projects";
 
   return (
     <main className="min-h-screen pt-28 md:pt-40">
@@ -32,8 +72,8 @@ export default async function Page({
           _key="projects-listing"
           mode="selected" 
           projects={projects}
-          title="All Projects"
-          description="Explore our latest work and case studies."
+          title={pageData?.title || "All Projects"}
+          description={pageData?.description || "Explore our latest work and case studies."}
        />
     </main>
   );

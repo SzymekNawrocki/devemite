@@ -54,6 +54,12 @@ export const postsPageType = defineType({
       description: 'Text shown when there is no body content (e.g., "No detailed description provided.")',
     }),
     defineField({
+      name: "noCoverImageLabel",
+      type: "string",
+      title: "No cover image label",
+      description: 'Text shown when a post has no main image (e.g., "No cover image")',
+    }),
+    defineField({
       name: "postImageAlt",
       type: "string",
       title: "Post Image Alt Text",

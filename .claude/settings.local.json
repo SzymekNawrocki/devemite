@@ -6,7 +6,10 @@
       "Bash(npm run:*)",
       "Bash(npx sanity:*)",
       "Bash(git stash:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(npx eslint *)"
     ]
   }
 }

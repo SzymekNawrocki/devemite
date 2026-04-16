@@ -54,6 +54,7 @@ export const POSTS_PAGE_QUERY = defineQuery(`
     backToBlogLabel,
     minReadLabel,
     noDescriptionLabel,
+    noCoverImageLabel,
     postImageAlt,
     relatedPostsEyebrow,
     relatedPostsTitle,
