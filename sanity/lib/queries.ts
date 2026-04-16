@@ -73,7 +73,7 @@ export const POSTS_COUNT_QUERY = defineQuery(`
 
 export const POSTS_QUERY = defineQuery(`
   *[_type == "post" && defined(slug.current) && language == $lang]
-  | order(publishedAt desc)[$offset...($offset + $limit)]{
+  | order(publishedAt desc)[$offset...$limit]{
     _id,
     title,
     slug,

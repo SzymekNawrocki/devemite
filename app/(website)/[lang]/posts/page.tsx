@@ -62,7 +62,7 @@ export default async function Page({ params, searchParams }: Props) {
 
   const [posts, pageData, homeData, totalCount]: [POSTS_QUERYResult, POSTS_PAGE_QUERYResult, HOME_TITLE_QUERYResult, number] =
     await Promise.all([
-      client.fetch(POSTS_QUERY, { lang, limit: PAGE_SIZE, offset }),
+      client.fetch(POSTS_QUERY, { lang, limit: offset + PAGE_SIZE, offset }),
       client.fetch(POSTS_PAGE_QUERY, { lang }),
       client.fetch(HOME_TITLE_QUERY, { lang }),
       client.fetch(POSTS_COUNT_QUERY, { lang }),
