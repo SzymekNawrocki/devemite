@@ -12,7 +12,7 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { HEADER_QUERY, FOOTER_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 import { JetBrains_Mono } from "next/font/google";
 import { buildAlternates } from "@/lib/hreflang";
-import { SanityLive } from "@/components/sanity/sanity-live-client";
+import { SanityLive } from "@/sanity/lib/live";
 
 const jbMono = JetBrains_Mono({
   subsets: ["latin", "latin-ext"],
