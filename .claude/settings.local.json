@@ -10,7 +10,8 @@
       "Bash(git add:*)",
       "Bash(git commit -m ':*)",
       "Bash(npx eslint *)",
-      "Bash(npm uninstall *)"
+      "Bash(npm uninstall *)",
+      "Bash(tsc --noEmit)"
     ]
   }
 }
