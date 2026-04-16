@@ -1,8 +1,8 @@
 # 🚀 Modern Multi-Language Portfolio & Blog
 
-A high-performance, fully localized portfolio and blog engine built with **Next.js 15**, **React 19**, and **Sanity CMS**. Designed for developers and agencies who want a seamless, content-driven experience with top-tier SEO and performance.
+A high-performance, fully localized portfolio and blog engine built with **Next.js 16**, **React 19**, and **Sanity CMS**. Designed for developers and agencies who want a seamless, content-driven experience with top-tier SEO and performance.
 
-![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)
+![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)
 ![Sanity](https://img.shields.io/badge/Sanity-v3-F03E2F?style=for-the-badge&logo=sanity)
 ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=for-the-badge&logo=tailwind-css)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript)
@@ -12,11 +12,11 @@ A high-performance, fully localized portfolio and blog engine built with **Next.
 ## ✨ Key Features
 
 - 🌍 **Document-Level Localization**: Fully managed multi-language support (PL, EN, DE) integrated directly into Sanity CMS.
-- 🏗️ **Modern Tech Stack**: Built with Next.js 15 (App Router), React 19, and Tailwind CSS 4.
+- 🏗️ **Modern Tech Stack**: Built with Next.js 16 (App Router), React 19, and Tailwind CSS 4.
 - 📝 **Advanced Blog Engine**: Categorized posts, related content, reading time estimation, and rich text support.
 - 🎨 **Fully Content-Managed**: Every string, image, and SEO meta tag is modifiable via Sanity Studio. No hardcoded UI strings.
 - 🛡️ **Type-Safe**: Complete TypeScript definitions for all Sanity queries via automatic type generation.
-- 🏎️ **Optimized Performance**: Next.js ISR (Incremental Static Regeneration) for lightning-fast page loads.
+- 💨 **Optimized Performance**: Next.js ISR (Incremental Static Regeneration) for lightning-fast page loads.
 - 📱 **Responsive Design**: Premium, mobile-first UI with dark mode support.
 - ✉️ **Contact Integration**: Dynamic contact forms powered by Zod validation and Resend.
 
@@ -24,7 +24,7 @@ A high-performance, fully localized portfolio and blog engine built with **Next.
 
 ## 🛠️ Tech Stack
 
-- **Framework**: [Next.js 15+](https://nextjs.org/) (App Router)
+- **Framework**: [Next.js 16+](https://nextjs.org/) (App Router)
 - **CMS**: [Sanity.io](https://www.sanity.io/) (Headless CMS)
 - **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
 - **Components**: [Radix UI](https://www.radix-ui.com/) & [Lucide React](https://lucide.dev/)
