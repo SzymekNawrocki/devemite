@@ -50,7 +50,7 @@ export function ProjectsBlock(props: ProjectsBlockProps) {
   return (
     <section className="py-16">
       <Container>
-        <div className="mb-12">
+        <div className="fade-in-up mb-12">
           <Eyebrow text={eyebrow} />
           <SectionTitle text={title} className="mb-4" />
           {description && (
@@ -60,11 +60,11 @@ export function ProjectsBlock(props: ProjectsBlockProps) {
           )}
         </div>
 
-        <div className="gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="stagger-children gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {displayProjects.map((project) => (
             <div
               key={project._id}
-              className="flex flex-col bg-card border border-border rounded-xl overflow-hidden"
+              className="flex flex-col bg-card border border-border rounded-xl overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(122,114,89,0.15)]"
             >
               {project.mainImage && (
                 <div className="relative h-48 overflow-hidden">

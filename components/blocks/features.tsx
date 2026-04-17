@@ -12,14 +12,14 @@ export function Features({ features, title }: FeaturesProps) {
   return (
     <section className="py-16">
       <Container className="flex flex-col gap-8">
-        <SectionTitle text={title} className="mx-auto max-w-3xl text-pretty" />
+        <SectionTitle text={title} className="fade-in-up mx-auto max-w-3xl text-pretty" />
 
         {Array.isArray(features) && (
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          <div className="stagger-children grid grid-cols-1 gap-6 md:grid-cols-3">
             {features.map((feature) => (
               <Card
                 key={feature._key}
-                className="bg-card text-card-foreground rounded-xl shadow-sm"
+                className="bg-card text-card-foreground rounded-xl shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(122,114,89,0.15)]"
               >
                 <CardHeader>
                   <CardTitle className="text-xl font-semibold">

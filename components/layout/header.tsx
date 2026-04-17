@@ -64,7 +64,7 @@ export function Header({ data, siteSettings }: { data: HEADER_QUERYResult; siteS
               <Link
                 key={index}
                 href={item.href as "/" | "/posts" | "/projects"}
-                className="hover:opacity-70 transition-opacity"
+                className="nav-link transition-opacity"
               >
                 {item.label}
               </Link>

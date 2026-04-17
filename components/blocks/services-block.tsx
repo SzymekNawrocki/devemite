@@ -42,9 +42,9 @@ export function ServicesBlock(props: ServicesBlockProps) {
       <Container>
         <Eyebrow text={eyebrow} />
 
-        <SectionTitle text={title} className="mb-12" />
+        <SectionTitle text={title} className="fade-in-up mb-12" />
 
-        <div className="gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="stagger-children gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {services.map((service) => {
             const Icon =
               service.icon && iconsMap[service.icon]
@@ -54,7 +54,7 @@ export function ServicesBlock(props: ServicesBlockProps) {
             return (
               <Card
                 key={service._id}
-                className="group shadow-sm hover:shadow-md border border-border rounded-xl transition-shadow"
+                className="group shadow-sm border border-border rounded-xl transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(122,114,89,0.15)]"
               >
                 <CardHeader className="flex items-center gap-4 pb-4">
                   <div className="flex justify-center items-center bg-secondary rounded-xl w-10 h-10">
