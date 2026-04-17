@@ -232,15 +232,13 @@
   position: absolute;
   bottom: -2px;
   left: 0;
-  width: 100%;
+  width: 0;
   height: 1px;
   background: currentColor;
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .nav-link:hover::after {
-  transform: scaleX(1);
+  width: 100%;
 }
 
 /* Disable animations for prefers-reduced-motion */
@@ -261,5 +259,6 @@
   }
   .nav-link::after {
     transition: none !important;
+    width: 0 !important;
   }
 }
