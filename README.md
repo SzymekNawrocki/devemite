@@ -20,7 +20,7 @@ The visual identity borrows from the desert: sandy warm tones (`#f2e7c9`), dark 
 
 ---
 
-## Sandstorm — the tech stack
+## Tech stack
 
 | Layer | Choice | Why |
 |---|---|---|
@@ -35,7 +35,7 @@ The visual identity borrows from the desert: sandy warm tones (`#f2e7c9`), dark 
 
 ---
 
-## Dunes — key features
+## Key features
 
 - **Page Builder** — hero, about me, projects, services, technologies, CTA, FAQ, rich text, split image, contact — all blocks composable in Sanity Studio
 - **Blog Engine** — categories, related posts, pagination, PortableText rendering
@@ -135,37 +135,6 @@ npm run test         # vitest run
 ├── __tests__/                   # Vitest unit tests
 └── public/                      # Static assets, manifest.json, robots.txt
 ```
-
----
-
-## Gotchas worth knowing
-
-**`sanity/extract.json`** is committed and manually maintained. Do **not** replace it with raw `sanity schema extract` output — that regenerates stricter types that break existing GROQ queries. To add a new schema type: register it in `schemaTypes/index.ts`, then manually write the matching `QUERYResult` type in `sanity/types.ts`.
-
-**All GROQ queries live in `sanity/lib/queries.ts`** — one file, no exceptions. The `PROJECTS_BLOCK_FRAGMENT` is currently duplicated 4× because inline GROQ doesn't support shared fragments across `defineQuery` calls — use a shared const fragment before adding a fifth.
-
-**`revalidateTag(tag, 'default')`** in `api/revalidate/tag/route.ts` takes two arguments intentionally — Next.js 16 type definitions require it. Don't remove the second arg or `tsc` will fail.
-
-**i18n strings** — `next-intl` is used for locale routing only. All UI strings come from Sanity CMS with English fallbacks. `useTranslations()` is not wired up.
-
----
-
-## What could be carved next
-
-The oasis is habitable. These are the trails that haven't been walked yet:
-
-- **RSS/Atom feed** for the blog — essential for developer audiences
-- **Full-text search** across posts and projects (Sanity search or Algolia)
-- **GDPR / Cookie consent** banner — legally required in PL/DE
-- **Rate limiting** on the contact form Server Action
-- **Reading time** calculation from PortableText body (already referenced in CMS schema)
-- **Table of contents** for long blog posts
-- **Scroll-to-top** button
-- **Vercel Analytics / Plausible** — privacy-first page view tracking
-- **PWA service worker** — manifest exists, worker missing
-- **More test coverage** — currently only contact validation is tested
-
----
 
 ## License
 
