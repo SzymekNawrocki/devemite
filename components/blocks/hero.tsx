@@ -3,7 +3,7 @@ import Image from "next/image";
 import type { CSSProperties } from "react";
 import { urlFor } from "@/sanity/lib/image";
 import { PAGE_QUERYResult } from "@/sanity/types";
-import { SectionTitle } from "../ui/section-title";
+import { TypewriterText } from "../ui/typewriter-text";
 import { Container } from "../ui/container";
 
 type HeroProps = Extract<
@@ -41,7 +41,11 @@ export function Hero(props: HeroProps) {
       <span className="sand-particle w-[3px] h-[2px] bg-[rgb(200,168,98)] left-[82%] top-[66%]" style={{ "--dx": "-38px", "--dy": "-68px", "--duration": "7.5s", "--delay": "1.5s", "--particle-opacity": "0.35" } as CSSProperties} aria-hidden="true" />
 
       <Container className="z-10 relative flex flex-col justify-center items-center gap-8 h-full text-center">
-        <SectionTitle text={title} tag="h1" className="hero-enter text-white lg:text-6xl" />
+        {title && (
+          <h1 className="text-foreground font-bold text-3xl md:text-4xl lg:text-5xl lg:text-6xl tracking-tight text-white">
+            <TypewriterText text={title} />
+          </h1>
+        )}
         {text && (
           <div className="hero-enter-late flex items-center text-white lg:prose-xl">
             <PortableText value={text} />
