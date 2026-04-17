@@ -142,4 +142,3 @@ Private project. Owned by [Szymon Nawrocki](https://github.com/SzymekNawrocki) â
 
 ---
 
-*"The desert does not hurry. Neither does good software."*
