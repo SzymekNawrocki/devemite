@@ -270,7 +270,7 @@ export type SiteSettings = {
   person?: {
     name?: string;
     jobTitle?: string;
-    sameAs?: Array<string | null>;
+    sameAs?: Array<string>;
   };
 };
 
@@ -622,6 +622,8 @@ export type PostsPage = {
   postImageAlt?: string;
   relatedPostsEyebrow?: string;
   relatedPostsTitle?: string;
+  prevPageLabel?: string;
+  nextPageLabel?: string;
   emptyStateTitle?: string;
   emptyStateDescription?: string;
   seo?: Seo;
@@ -999,7 +1001,7 @@ export type AllSanitySchemaTypes = TechnologiesPage | Seo | ProjectsPage | Conta
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: sanity/lib/queries.ts
 // Variable: POSTS_PAGE_QUERY
-// Query: *[_type == "postsPage" && language == $lang][0]{    eyebrow,    title,    intro,    backToHomeLabel,    backToBlogLabel,    minReadLabel,    noDescriptionLabel,    noCoverImageLabel,    postImageAlt,    relatedPostsEyebrow,    relatedPostsTitle,    emptyStateTitle,    emptyStateDescription,    "seo": {      "title": coalesce(seo.title, title, ""),      "description": coalesce(seo.description, ""),      "seoImage": seo.seoImage    }  }
+// Query: *[_type == "postsPage" && language == $lang][0]{    eyebrow,    title,    intro,    backToHomeLabel,    backToBlogLabel,    minReadLabel,    noDescriptionLabel,    noCoverImageLabel,    postImageAlt,    relatedPostsEyebrow,    relatedPostsTitle,    prevPageLabel,    nextPageLabel,    emptyStateTitle,    emptyStateDescription,    "seo": {      "title": coalesce(seo.title, title, ""),      "description": coalesce(seo.description, ""),      "seoImage": seo.seoImage    }  }
 export type POSTS_PAGE_QUERYResult = {
   eyebrow: string | null;
   title: string;
@@ -4823,6 +4825,21 @@ export type HOME_TITLE_QUERYResult = {
 } | {
   title: string | null;
 } | null;
+// Variable: PERSON_SCHEMA_QUERY
+// Query: *[_id == "siteSettings"][0]{    "person": {      "name": person.name,      "jobTitle": person.jobTitle,      "sameAs": person.sameAs    }  }
+export type PERSON_SCHEMA_QUERYResult = {
+  person: {
+    name: null;
+    jobTitle: null;
+    sameAs: null;
+  };
+} | {
+  person: {
+    name: string | null;
+    jobTitle: string | null;
+    sameAs: Array<string> | null;
+  };
+} | null;
 // Variable: TECHNOLOGY_QUERY
 // Query: *[_type == "technology" && slug.current == $slug && language == $lang][0]{    _id,    name,    slug,    description,    body,    icon,    color,    content[]{      ...,      _type == "faqs" => {        "faqs": faqs[]->{_id, _type, title, body}      },      _type == "servicesSection" => {        "services": services[]->{_id, title, slug, description, icon},        readMoreLabel      },      _type == "servicesBlock" => {        "services": services[]->{_id, title, slug, description, icon},        readMoreLabel      },      _type == "technologiesBlock" => {        "technologies": technologies[]->{_id, name, slug, description, icon, color, language}      },        _type == "projectsBlock" => {    "eyebrow": eyebrow,    "title": title,    "description": description,    "mode": mode,    detailsLabel,    mode == "selected" => {      "projects": projects[]->[language == $lang]{        _id, title, slug, description, mainImage, projectLink, githubLink,          "technologies": coalesce(    technologies[]->{      "tech": coalesce(        *[_type == "translation.metadata" && references(^._id)][0].translations[_key == $lang][0].value->,        @      ){          _id,  slug,  name,  icon,  language      }    }.tech,    []  )      }    },    mode == "all" => {      "projects": *[_type == "project" && defined(slug.current) && language == $lang] | order(_createdAt desc)[0...100] {        _id, title, slug, description, mainImage, projectLink, githubLink,          "technologies": coalesce(    technologies[]->{      "tech": coalesce(        *[_type == "translation.metadata" && references(^._id)][0].translations[_key == $lang][0].value->,        @      ){          _id,  slug,  name,  icon,  language      }    }.tech,    []  ),        language      }    }  }    },    "seo": {      "title": coalesce(seo.title, name, ""),      "description": coalesce(seo.description, description, ""),      "seoImage": seo.seoImage    }  }
 export type TECHNOLOGY_QUERYResult = {
@@ -5821,26 +5838,15 @@ export type FOOTER_QUERYResult = {
   }> | null;
 } | null;
 
-// Variable: PERSON_SCHEMA_QUERY
-// Query: *[_id == "siteSettings"][0]{    "person": {      "name": person.name,      "jobTitle": person.jobTitle,      "sameAs": person.sameAs    }  }
-export type PERSON_SCHEMA_QUERYResult = {
-  person: {
-    name: string | null;
-    jobTitle: string | null;
-    sameAs: Array<string> | null;
-  };
-} | null;
-
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n  *[_type == \"postsPage\" && language == $lang][0]{\n    eyebrow,\n    title,\n    intro,\n    backToHomeLabel,\n    backToBlogLabel,\n    minReadLabel,\n    noDescriptionLabel,\n    noCoverImageLabel,\n    postImageAlt,\n    relatedPostsEyebrow,\n    relatedPostsTitle,\n    emptyStateTitle,\n    emptyStateDescription,\n    \"seo\": {\n      \"title\": coalesce(seo.title, title, \"\"),\n      \"description\": coalesce(seo.description, \"\"),\n      \"seoImage\": seo.seoImage\n    }\n  }\n": POSTS_PAGE_QUERYResult;
+    "\n  *[_type == \"postsPage\" && language == $lang][0]{\n    eyebrow,\n    title,\n    intro,\n    backToHomeLabel,\n    backToBlogLabel,\n    minReadLabel,\n    noDescriptionLabel,\n    noCoverImageLabel,\n    postImageAlt,\n    relatedPostsEyebrow,\n    relatedPostsTitle,\n    prevPageLabel,\n    nextPageLabel,\n    emptyStateTitle,\n    emptyStateDescription,\n    \"seo\": {\n      \"title\": coalesce(seo.title, title, \"\"),\n      \"description\": coalesce(seo.description, \"\"),\n      \"seoImage\": seo.seoImage\n    }\n  }\n": POSTS_PAGE_QUERYResult;
     "\n  count(*[_type == \"post\" && defined(slug.current) && language == $lang])\n": POSTS_COUNT_QUERYResult;
     "\n  *[_type == \"post\" && defined(slug.current) && language == $lang]\n  | order(publishedAt desc)[$offset...$limit]{\n    _id,\n    title,\n    slug,\n    excerpt,\n    body,\n    mainImage,\n    publishedAt,\n    \"categories\": coalesce(\n      categories[]->{_id, slug, title},\n      []\n    ),\n    author->{name, image},\n    relatedPosts[]{\n      _key,\n      ...@->{\n        _id,\n        title,\n        slug,\n        language\n      }\n    },\n    \"seo\": {\n      \"title\": coalesce(seo.title, title, \"\"),\n      \"description\": coalesce(seo.description, \"\"),\n      \"seoImage\": seo.seoImage\n    }\n  }\n": POSTS_QUERYResult;
     "\n  *[_type == \"post\" && defined(slug.current) && language == $lang]{\n    \"slug\": slug.current,\n    language\n  }\n": POSTS_SLUGS_QUERYResult;
     "\n  *[_type == \"post\" && slug.current == $slug && language == $lang][0]{\n    _id,\n    _updatedAt,\n    title,\n    body,\n    mainImage,\n    publishedAt,\n    \"categories\": coalesce(\n      categories[]->{_id, slug, title},\n      []\n    ),\n    author->{name, image},\n    relatedPosts[]{\n      _key,\n      ...@->{\n        _id,\n        title,\n        slug,\n        language\n      }\n    },\n    \"seo\": {\n      \"title\": coalesce(seo.title, title, \"\"),\n      \"description\": coalesce(seo.description, \"\"),\n      \"seoImage\": seo.seoImage\n    }\n  }\n": POST_QUERYResult;
-    "\n  *[_id == \"siteSettings\"][0]{\n    \"person\": {\n      \"name\": person.name,\n      \"jobTitle\": person.jobTitle,\n      \"sameAs\": person.sameAs\n    }\n  }\n": PERSON_SCHEMA_QUERYResult;
     "\n  *[_type == \"project\" && defined(slug.current) && language == $lang]\n  | order(_createdAt desc){\n    _id,\n    title,\n    slug,\n    description,\n    mainImage,\n    projectLink,\n    githubLink,\n    \n  \"technologies\": coalesce(\n    technologies[]->{\n      \"tech\": coalesce(\n        *[_type == \"translation.metadata\" && references(^._id)][0].translations[_key == $lang][0].value->,\n        @\n      ){\n        \n  _id,\n  slug,\n  name,\n  icon,\n  language\n\n      }\n    }.tech,\n    []\n  )\n,\n    language\n  }\n": PROJECTS_QUERYResult;
     "\n  *[_type == \"project\" && defined(slug.current) && language == $lang]{\n    \"slug\": slug.current,\n    language\n  }\n": PROJECTS_SLUGS_QUERYResult;
     "\n  *[_type == \"project\" && slug.current == $slug && language == $lang][0]{\n    _id,\n    title,\n    slug,\n    description,\n    body,\n    mainImage,\n    projectLink,\n    githubLink,\n    \n  \"technologies\": coalesce(\n    technologies[]->{\n      \"tech\": coalesce(\n        *[_type == \"translation.metadata\" && references(^._id)][0].translations[_key == $lang][0].value->,\n        @\n      ){\n        \n  _id,\n  slug,\n  name,\n  icon,\n  language\n\n      }\n    }.tech,\n    []\n  )\n,\n    \"seo\": {\n      \"title\": coalesce(seo.title, title, \"\"),\n      \"description\": coalesce(seo.description, description, \"\"),\n      \"seoImage\": seo.seoImage\n    }\n  }\n": PROJECT_QUERYResult;
@@ -5849,6 +5855,7 @@ declare module "@sanity/client" {
     "\n  *[_type == \"page\" && defined(slug.current) && language == $lang]{\n    \"slug\": slug.current,\n    language\n  }\n": PAGES_SLUGS_QUERYResult;
     "\n  *[_id == \"siteSettings\"][0]{\n    \"homePage\": coalesce(\n      *[_type == \"translation.metadata\" && references(^.homePage._ref)][0].translations[_key == $lang][0].value->,\n      homePage->\n    ) {\n      _id,\n      title,\n      content[] {\n        ...,\n        _type == \"faqs\" => {\n          \"faqs\": faqs[]->{_id, _type, title, body}\n        },\n        _type == \"servicesSection\" => {\n          \"services\": services[]->{_id, title, slug, description, icon},\n          readMoreLabel\n        },\n        _type == \"servicesBlock\" => {\n          \"services\": services[]->{_id, title, slug, description, icon},\n          readMoreLabel\n        },\n        _type == \"technologiesBlock\" => {\n          \"technologies\": technologies[]->{_id, name, slug, description, icon, color, language}\n        },\n        \n  _type == \"projectsBlock\" => {\n    \"eyebrow\": eyebrow,\n    \"title\": title,\n    \"description\": description,\n    \"mode\": mode,\n    detailsLabel,\n    mode == \"selected\" => {\n      \"projects\": projects[]->[language == $lang]{\n        _id, title, slug, description, mainImage, projectLink, githubLink,\n        \n  \"technologies\": coalesce(\n    technologies[]->{\n      \"tech\": coalesce(\n        *[_type == \"translation.metadata\" && references(^._id)][0].translations[_key == $lang][0].value->,\n        @\n      ){\n        \n  _id,\n  slug,\n  name,\n  icon,\n  language\n\n      }\n    }.tech,\n    []\n  )\n\n      }\n    },\n    mode == \"all\" => {\n      \"projects\": *[_type == \"project\" && defined(slug.current) && language == $lang] | order(_createdAt desc)[0...100] {\n        _id, title, slug, description, mainImage, projectLink, githubLink,\n        \n  \"technologies\": coalesce(\n    technologies[]->{\n      \"tech\": coalesce(\n        *[_type == \"translation.metadata\" && references(^._id)][0].translations[_key == $lang][0].value->,\n        @\n      ){\n        \n  _id,\n  slug,\n  name,\n  icon,\n  language\n\n      }\n    }.tech,\n    []\n  )\n,\n        language\n      }\n    }\n  }\n\n      }\n    }\n  }\n": HOME_PAGE_QUERYResult;
     "\n  *[_id == \"siteSettings\"][0]{\n    \"title\": coalesce(\n      *[_type == \"translation.metadata\" && references(^.homePage._ref)][0].translations[_key == $lang][0].value->title,\n      homePage->title\n    )\n  }\n": HOME_TITLE_QUERYResult;
+    "\n  *[_id == \"siteSettings\"][0]{\n    \"person\": {\n      \"name\": person.name,\n      \"jobTitle\": person.jobTitle,\n      \"sameAs\": person.sameAs\n    }\n  }\n": PERSON_SCHEMA_QUERYResult;
     "\n  *[_type == \"technology\" && slug.current == $slug && language == $lang][0]{\n    _id,\n    name,\n    slug,\n    description,\n    body,\n    icon,\n    color,\n    content[]{\n      ...,\n      _type == \"faqs\" => {\n        \"faqs\": faqs[]->{_id, _type, title, body}\n      },\n      _type == \"servicesSection\" => {\n        \"services\": services[]->{_id, title, slug, description, icon},\n        readMoreLabel\n      },\n      _type == \"servicesBlock\" => {\n        \"services\": services[]->{_id, title, slug, description, icon},\n        readMoreLabel\n      },\n      _type == \"technologiesBlock\" => {\n        \"technologies\": technologies[]->{_id, name, slug, description, icon, color, language}\n      },\n      \n  _type == \"projectsBlock\" => {\n    \"eyebrow\": eyebrow,\n    \"title\": title,\n    \"description\": description,\n    \"mode\": mode,\n    detailsLabel,\n    mode == \"selected\" => {\n      \"projects\": projects[]->[language == $lang]{\n        _id, title, slug, description, mainImage, projectLink, githubLink,\n        \n  \"technologies\": coalesce(\n    technologies[]->{\n      \"tech\": coalesce(\n        *[_type == \"translation.metadata\" && references(^._id)][0].translations[_key == $lang][0].value->,\n        @\n      ){\n        \n  _id,\n  slug,\n  name,\n  icon,\n  language\n\n      }\n    }.tech,\n    []\n  )\n\n      }\n    },\n    mode == \"all\" => {\n      \"projects\": *[_type == \"project\" && defined(slug.current) && language == $lang] | order(_createdAt desc)[0...100] {\n        _id, title, slug, description, mainImage, projectLink, githubLink,\n        \n  \"technologies\": coalesce(\n    technologies[]->{\n      \"tech\": coalesce(\n        *[_type == \"translation.metadata\" && references(^._id)][0].translations[_key == $lang][0].value->,\n        @\n      ){\n        \n  _id,\n  slug,\n  name,\n  icon,\n  language\n\n      }\n    }.tech,\n    []\n  )\n,\n        language\n      }\n    }\n  }\n\n    },\n    \"seo\": {\n      \"title\": coalesce(seo.title, name, \"\"),\n      \"description\": coalesce(seo.description, description, \"\"),\n      \"seoImage\": seo.seoImage\n    }\n  }\n": TECHNOLOGY_QUERYResult;
     "\n  *[_type == \"technology\" && defined(slug.current) && language == $lang]\n  | order(name asc){\n    _id,\n    name,\n    slug,\n    description,\n    icon,\n    color,\n    language\n  }\n": TECHNOLOGIES_QUERYResult;
     "\n  *[_type == \"service\" && slug.current == $slug && language == $lang][0]{\n    _id,\n    title,\n    slug,\n    description,\n    icon,\n    content[]{\n      ...,\n      _type == \"faqs\" => {\n        \"faqs\": faqs[]->{_id, _type, title, body}\n      },\n      _type == \"servicesSection\" => {\n        \"services\": services[]->{_id, title, slug, description, icon},\n        readMoreLabel\n      },\n      _type == \"servicesBlock\" => {\n        \"services\": services[]->{_id, title, slug, description, icon},\n        readMoreLabel\n      },\n      _type == \"technologiesBlock\" => {\n        \"technologies\": technologies[]->{_id, name, slug, description, icon, color, language}\n      },\n      \n  _type == \"projectsBlock\" => {\n    \"eyebrow\": eyebrow,\n    \"title\": title,\n    \"description\": description,\n    \"mode\": mode,\n    detailsLabel,\n    mode == \"selected\" => {\n      \"projects\": projects[]->[language == $lang]{\n        _id, title, slug, description, mainImage, projectLink, githubLink,\n        \n  \"technologies\": coalesce(\n    technologies[]->{\n      \"tech\": coalesce(\n        *[_type == \"translation.metadata\" && references(^._id)][0].translations[_key == $lang][0].value->,\n        @\n      ){\n        \n  _id,\n  slug,\n  name,\n  icon,\n  language\n\n      }\n    }.tech,\n    []\n  )\n\n      }\n    },\n    mode == \"all\" => {\n      \"projects\": *[_type == \"project\" && defined(slug.current) && language == $lang] | order(_createdAt desc)[0...100] {\n        _id, title, slug, description, mainImage, projectLink, githubLink,\n        \n  \"technologies\": coalesce(\n    technologies[]->{\n      \"tech\": coalesce(\n        *[_type == \"translation.metadata\" && references(^._id)][0].translations[_key == $lang][0].value->,\n        @\n      ){\n        \n  _id,\n  slug,\n  name,\n  icon,\n  language\n\n      }\n    }.tech,\n    []\n  )\n,\n        language\n      }\n    }\n  }\n\n    },\n    \"seo\": {\n      \"title\": coalesce(seo.title, title, \"\"),\n      \"description\": coalesce(seo.description, description, \"\"),\n      \"seoImage\": seo.seoImage\n    }\n  }\n": SERVICE_QUERYResult;

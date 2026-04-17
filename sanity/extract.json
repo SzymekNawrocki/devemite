@@ -1563,19 +1563,25 @@
           "attributes": {
             "name": {
               "type": "objectAttribute",
-              "value": { "type": "string" },
+              "value": {
+                "type": "string"
+              },
               "optional": true
             },
             "jobTitle": {
               "type": "objectAttribute",
-              "value": { "type": "string" },
+              "value": {
+                "type": "string"
+              },
               "optional": true
             },
             "sameAs": {
               "type": "objectAttribute",
               "value": {
                 "type": "array",
-                "of": { "type": "string" }
+                "of": {
+                  "type": "string"
+                }
               },
               "optional": true
             }
@@ -3722,6 +3728,20 @@
         "optional": true
       },
       "relatedPostsTitle": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "prevPageLabel": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "nextPageLabel": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
