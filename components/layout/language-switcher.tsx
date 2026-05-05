@@ -1,7 +1,7 @@
 'use client';
 
 import { useLocale } from 'next-intl';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter, usePathname } from '@/i18n/navigation';
 import { useTransition } from 'react';
 import {
   Select,
@@ -24,8 +24,7 @@ export default function LanguageSwitcher({ scrolled }: { scrolled?: boolean }) {
 
   const handleLanguageChange = (newLocale: string) => {
     startTransition(() => {
-      const newPathname = pathname.replace(`/${locale}`, `/${newLocale}`);
-      router.replace(newPathname);
+      router.replace(pathname, { locale: newLocale });
     });
   };
 
@@ -56,7 +55,6 @@ export default function LanguageSwitcher({ scrolled }: { scrolled?: boolean }) {
       </SelectTrigger>
 
       <SelectContent className="bg-popover text-popover-foreground backdrop-blur-xl border-border">
-        {/* ... reszta kodu bez zmian ... */}
         {languages.map((lang) => (
           <SelectItem 
             key={lang.code} 

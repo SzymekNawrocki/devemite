@@ -1,5 +1,5 @@
 Portfolio — Next.js 16 + Sanity CMS
-  Multilingual (pl/en/de) portfolio with blog. Next.js 16 App Router + Sanity v3
+  Multilingual (pl/en/de) portfolio with blog. Next.js 16 App Router + Sanity v4
   embedded Studio + next-intl + Tailwind v4 + Resend.
 
   Commands
@@ -43,6 +43,9 @@ Portfolio — Next.js 16 + Sanity CMS
     (1) register in sanity/schemaTypes/index.ts
     (2) manually write the QUERYResult type in sanity/types.ts
     matching the shape of the GROQ query
+
+  Next.js 16 renamed middleware.ts to proxy.ts — the active i18n middleware is
+    at proxy.ts in the project root (not middleware.ts)
 
   Non-negotiable rules
 
