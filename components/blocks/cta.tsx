@@ -27,7 +27,7 @@ export function CTA({
 }: CTAProps) {
   return (
     <Container>
-      <Card className="relative my-22 rounded-2xl h-64 md:h-72 overflow-hidden">
+      <Card className="relative my-22 rounded-2xl h-64 md:h-72 overflow-hidden dune-rise cta-heat-idle">
         {backgroundImage && (
           <>
             <Image
@@ -43,7 +43,7 @@ export function CTA({
 
         {!backgroundImage && <div className="absolute inset-0 bg-background" />}
 
-        <CardContent className="z-10 relative flex flex-col justify-center items-center h-full text-center">
+        <CardContent className="z-10 relative flex flex-col justify-center items-center h-full text-center stagger-desert">
           <Eyebrow text={subtitle} className="text-foreground/80" />
 
           <SectionTitle text={title} tag="h3" className="mb-6 text-2xl md:text-4xl" />

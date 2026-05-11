@@ -18,7 +18,7 @@ export function ContactSection(props: ContactSectionProps) {
     <section className="py-16">
       <Container>
         <div className="grid gap-12 lg:grid-cols-2">
-          <div className="space-y-6">
+          <div className="space-y-6 stagger-desert">
             <div className="space-y-2">
               <SectionTitle text={title} />
               {portableTextValue && (
@@ -29,7 +29,7 @@ export function ContactSection(props: ContactSectionProps) {
             </div>
 
             {contactDetails && (
-              <div className="space-y-4">
+              <div className="space-y-4 stagger-desert">
                 {contactDetails.email && (
                   <div className="flex items-center gap-3">
                     <Mail className="h-5 w-5 text-primary" />
@@ -57,7 +57,7 @@ export function ContactSection(props: ContactSectionProps) {
           </div>
 
           {showForm && (
-            <div className="w-full">
+            <div className="w-full mirage-in">
               <ContactForm settings={formSettings} />
             </div>
           )}

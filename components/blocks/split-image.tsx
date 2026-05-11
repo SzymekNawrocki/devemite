@@ -17,14 +17,14 @@ export function SplitImage({ title, image, orientation }: SplitImageProps) {
     >
       {image ? (
         <Image
-          className="h-auto w-2/3 rounded-xl"
+          className="h-auto w-2/3 rounded-xl mirage-in"
           src={urlFor(image).width(500).height(500).url()}
           width={800}
           height={600}
           alt=""
         />
       ) : null}
-      <div className="flex w-1/3 items-center">
+      <div className="flex w-1/3 items-center dune-rise">
         <SectionTitle text={title} className="mx-auto max-w-3xl text-pretty text-accent font-light lg:text-8xl" />
       </div>
     </div>

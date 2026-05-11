@@ -34,13 +34,14 @@ export function TechnologiesBlock(props: TechnologiesBlockProps) {
   return (
     <section className="py-16">
       <Container>
-        <Eyebrow text={eyebrow} />
-
-        <SectionTitle text={title} className="mb-12" />
+        <div className="dune-rise mb-12">
+          <Eyebrow text={eyebrow} />
+          <SectionTitle text={title} />
+        </div>
 
         <div className="gap-12 grid grid-cols-1 md:grid-cols-2">
           {image && (
-            <div className="relative rounded-lg w-full h-full overflow-hidden">
+            <div className="relative rounded-lg w-full h-full overflow-hidden mirage-in-left">
               <Image
                 src={urlFor(image).width(1000).height(1000).url()}
                 alt={title ?? "Technologies"}
@@ -50,7 +51,7 @@ export function TechnologiesBlock(props: TechnologiesBlockProps) {
             </div>
           )}
 
-          <div className="space-y-4">
+          <div className="space-y-4 stagger-desert">
             {technologies.map((tech, index) => (
               <div key={tech._id}>
                 <Link
