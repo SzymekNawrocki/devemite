@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/layout/theme-provider";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Footer } from "@/components/layout/footer";
+import { ScrollAnimations } from "@/components/layout/scroll-animations";
 import { sanityFetch } from "@/sanity/lib/live";
 import { HEADER_QUERY, FOOTER_QUERY, SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 import { JetBrains_Mono } from "next/font/google";
@@ -69,6 +70,7 @@ export default async function FrontendLayout({
               disableTransitionOnChange
             >
               <Header data={headerData.data} siteSettings={siteSettingsData.data} />
+              <ScrollAnimations />
               <main>{children}</main>
               <Footer data={footerData.data} />
             </ThemeProvider>

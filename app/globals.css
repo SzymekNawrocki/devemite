@@ -229,69 +229,67 @@
   animation: sand-particle var(--duration, 8s) ease-in-out var(--delay, 0s) infinite;
 }
 
-/* Scroll-driven section animations — progressive enhancement */
-@supports (animation-timeline: view()) {
-  .fade-in-up {
-    animation: fade-in-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 30%;
-  }
+/* ==============================================
+   SCROLL ANIMATIONS — IntersectionObserver driven
+   Works in all browsers (Chrome, Firefox, Safari)
+   JS adds .revealed when element enters viewport
+   ============================================== */
 
-  .animate-line-draw {
-    transform-origin: left center;
-    animation: line-draw 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 30%;
-  }
-
-  .stagger-children > * {
-    animation: fade-in-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 35%;
-  }
-  .stagger-children > *:nth-child(2) { animation-delay: 60ms; }
-  .stagger-children > *:nth-child(3) { animation-delay: 120ms; }
-  .stagger-children > *:nth-child(4) { animation-delay: 180ms; }
-  .stagger-children > *:nth-child(5) { animation-delay: 240ms; }
-  .stagger-children > *:nth-child(6) { animation-delay: 300ms; }
-
-  /* Dune rise — scroll-driven, heavier/slower than fade-in-up */
-  .dune-rise {
-    animation: dune-rise 1.1s cubic-bezier(0.6, 0.01, 0.05, 1.0) both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 35%;
-  }
-
-  /* Mirage in — shimmer-resolve from right */
-  .mirage-in {
-    animation: mirage-in 1.3s cubic-bezier(0.5, 0.0, 0.1, 1.0) both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 40%;
-  }
-
-  /* Mirage in left — shimmer-resolve from left (image panels) */
-  .mirage-in-left {
-    animation: mirage-in-left 1.3s cubic-bezier(0.5, 0.0, 0.1, 1.0) both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 40%;
-  }
-
-  /* Stagger desert — dune-rise variant with 80ms steps, up to 10 children */
-  .stagger-desert > * {
-    animation: dune-rise 1.1s cubic-bezier(0.6, 0.01, 0.05, 1.0) both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 40%;
-  }
-  .stagger-desert > *:nth-child(2)  { animation-delay: 80ms; }
-  .stagger-desert > *:nth-child(3)  { animation-delay: 160ms; }
-  .stagger-desert > *:nth-child(4)  { animation-delay: 240ms; }
-  .stagger-desert > *:nth-child(5)  { animation-delay: 320ms; }
-  .stagger-desert > *:nth-child(6)  { animation-delay: 400ms; }
-  .stagger-desert > *:nth-child(7)  { animation-delay: 480ms; }
-  .stagger-desert > *:nth-child(8)  { animation-delay: 560ms; }
-  .stagger-desert > *:nth-child(9)  { animation-delay: 640ms; }
-  .stagger-desert > *:nth-child(10) { animation-delay: 720ms; }
+/* Initial hidden state for all scroll-animated elements */
+.fade-in-up,
+.dune-rise,
+.mirage-in,
+.mirage-in-left {
+  opacity: 0;
 }
+.animate-line-draw {
+  transform-origin: left center;
+  opacity: 0;
+}
+.stagger-children > *,
+.stagger-desert > * {
+  opacity: 0;
+}
+
+/* Revealed states — fired once .revealed is added by JS */
+.fade-in-up.revealed {
+  animation: fade-in-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.dune-rise.revealed {
+  animation: dune-rise 1.1s cubic-bezier(0.6, 0.01, 0.05, 1.0) both;
+}
+.mirage-in.revealed {
+  animation: mirage-in 1.3s cubic-bezier(0.5, 0.0, 0.1, 1.0) both;
+}
+.mirage-in-left.revealed {
+  animation: mirage-in-left 1.3s cubic-bezier(0.5, 0.0, 0.1, 1.0) both;
+}
+.animate-line-draw.revealed {
+  animation: line-draw 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Stagger — .revealed added to container, children animate in sequence */
+.stagger-children.revealed > * {
+  animation: fade-in-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.stagger-children.revealed > *:nth-child(2) { animation-delay: 60ms; }
+.stagger-children.revealed > *:nth-child(3) { animation-delay: 120ms; }
+.stagger-children.revealed > *:nth-child(4) { animation-delay: 180ms; }
+.stagger-children.revealed > *:nth-child(5) { animation-delay: 240ms; }
+.stagger-children.revealed > *:nth-child(6) { animation-delay: 300ms; }
+
+.stagger-desert.revealed > * {
+  animation: dune-rise 1.1s cubic-bezier(0.6, 0.01, 0.05, 1.0) both;
+}
+.stagger-desert.revealed > *:nth-child(2)  { animation-delay: 80ms; }
+.stagger-desert.revealed > *:nth-child(3)  { animation-delay: 160ms; }
+.stagger-desert.revealed > *:nth-child(4)  { animation-delay: 240ms; }
+.stagger-desert.revealed > *:nth-child(5)  { animation-delay: 320ms; }
+.stagger-desert.revealed > *:nth-child(6)  { animation-delay: 400ms; }
+.stagger-desert.revealed > *:nth-child(7)  { animation-delay: 480ms; }
+.stagger-desert.revealed > *:nth-child(8)  { animation-delay: 560ms; }
+.stagger-desert.revealed > *:nth-child(9)  { animation-delay: 640ms; }
+.stagger-desert.revealed > *:nth-child(10) { animation-delay: 720ms; }
 
 /* Desktop nav underline sweep */
 .nav-link {
@@ -345,29 +343,34 @@
 
 /* Disable animations for prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
+  /* Hero time-based animations */
   .hero-enter,
   .hero-enter-late,
-  .sand-particle,
+  .sand-particle {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  /* Scroll-revealed elements — always visible, never animated */
   .fade-in-up,
-  .animate-line-draw {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
-  .stagger-children > * {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
+  .fade-in-up.revealed,
   .dune-rise,
+  .dune-rise.revealed,
   .mirage-in,
-  .mirage-in-left {
+  .mirage-in.revealed,
+  .mirage-in-left,
+  .mirage-in-left.revealed,
+  .animate-line-draw,
+  .animate-line-draw.revealed {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
   }
-  .stagger-desert > * {
+  .stagger-children > *,
+  .stagger-children.revealed > *,
+  .stagger-desert > *,
+  .stagger-desert.revealed > * {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
